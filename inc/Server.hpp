@@ -1,30 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
+/*   Updated: 2023/06/22 23:05:56 by ozahir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SERVER_HPP
 #define SERVER_HPP
-#include "includes.hpp"
-#include "Client.hpp"
 
-
-class  Server
+class Server
 {
     public:
-        Server();
-        void    init(char   *arg);
-        void    GetPort(std::string port);
-        void    getPassword(std::string password);
-        void    ServerBind();
-        void    start();
-        void    FdKill();
-        void    IncomingRequest(int     incoming);
-        void    RequestQueue();
-        void    RequestHandler(int i);
-        void    NewConection();
-        void    ConectionClosed(int i);
-        ~Server();
+        Server(std::string &pass, int port);
+        void    connect();
+        void    disconect();
+        void    createChannel(Channel *channel);
+        void    removeChannel(Channel *channel);
+        void    addClient(Client *client);
+        void    removeClient(Client *client);
+        void    sendMessage(std::string &message); /* this method broadcast message to every client*/
+        
+        std::string ip; /*wht not server name ??*/
+        int         port;
+        std::vector<Channel *> channels;
+        std::vector<Client  *> clients;
     private:
-        int     port;
-        std::vector<struct pollfd> polll;
-        std::vector<Client *> clients;
-        std::queue <std::pair <std::string , Client*> > RequestsQueue;
+        void    createSocket();
+        void    makeNonBlockSocket();
+        void    makePortReusable();
+        void    goBindSocket();
+
+        int listensocket;
+        std::string password;
 };
 #endif
-
