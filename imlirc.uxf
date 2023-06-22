@@ -1,0 +1,81 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>217</x><y>0</y><w>224</w><h>126</h></coordinates><panel_attributes>IRCSystem
+--
+
+- servers: List&lt;Server&gt;                      
+- users: List&lt;User&gt;
+   
+--
+
++ addServer(server: Server): void            
++ removeServer(server: Server): void         
++ addUser(user: User): void                  
++ removeUser(user: User): void   
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>378</x><y>154</y><w>189</w><h>161</h></coordinates><panel_attributes>Client
+--
+
+- username: string
+- ip: string
+- port: int
+- server: Server
+
+--
+
++ connect(server: Server): void
++ disconnect(): void
++ joinChannel(channel: Channel): void
++ leaveChannel(channel: Channel): void
++ sendMessage(message: Message): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>91</x><y>161</y><w>189</w><h>196</h></coordinates><panel_attributes>Server
+--
+
+- ip: string                                 
+- port: int                                  
+- channels: List&lt;Channel&gt;                    
+- clients: List&lt;Client&gt; 
+
+--
+
++ connect(): void
++ disconnect(): void
++ createChannel(channel: Channel): void
++ removeChannel(channel: Channel): void
++ addClient(client: Client): void
++ removeClient(client: Client): void
++ sendMessage(message: Message): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>378</x><y>371</y><w>189</w><h>105</h></coordinates><panel_attributes>Channel
+--
+- name: string
+- users: List&lt;User&gt;
+--
+
++ addUser(user: User): void
++ removeUser(user: User): void
++ sendMessage(message: Message): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>273</x><y>224</y><w>119</w><h>28</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;150;10</additional_attributes></element><element><id>Relation</id><coordinates><x>182</x><y>119</y><w>154</w><h>56</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=1</panel_attributes><additional_attributes>10;60;200;10</additional_attributes></element><element><id>Relation</id><coordinates><x>308</x><y>119</y><w>175</w><h>49</h></coordinates><panel_attributes>lt=-
+m1=*
+m2=1</panel_attributes><additional_attributes>230;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>273</x><y>224</y><w>119</w><h>210</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;150;280</additional_attributes></element><element><id>Relation</id><coordinates><x>462</x><y>308</y><w>28</w><h>77</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>364</x><y>553</y><w>196</w><h>98</h></coordinates><panel_attributes>User
+--
+-nickname: string
+-realName: string
+--
+
++ setNickname(nickname: string): void
++ setRealName(realName: string): void
++ sendMessage(message: Message): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>462</x><y>469</y><w>28</w><h>98</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=*</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>UMLClass</id><coordinates><x>105</x><y>546</y><w>196</w><h>105</h></coordinates><panel_attributes>Message
+--
+- sender: User
+- content: string
+
+--
+
++ getSender(): User
++ getContent(): string</panel_attributes><additional_attributes></additional_attributes></element></diagram>
