@@ -28,13 +28,14 @@
 #include <stdio.h>
 #include  <cstring>
 #include <sstream>
-class Client;
-class  Channel;
-class Message;
+
+#include "Client.hpp"
+#include "Channel.hpp"
+#include "Message.hpp"
 class Server
 {
     public:
-        Server(std::string &pass, int port, int serial = 0);
+        Server(std::string pass, int port, int serial = 0);
         ~Server();
         void    connect();
         void    disconect();
@@ -55,9 +56,12 @@ class Server
         void    goBindSocket();
         void    getEvent(int poll_num);
         void    acceptNewClient();
+        int    get_message(int fd,int index);
+        Client *get_client_adress(int fd);
 
         int listensocket;
         std::string password;
         std::vector<struct pollfd> fds;
+        std::map<int , Client *>   fdmapping;
 };
 #endif

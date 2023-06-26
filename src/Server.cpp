@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include "../inc/Server.hpp"
 
 /* public methods */
 
@@ -29,7 +29,7 @@ Server::~Server()
     }
 }
 
-Server::Server(std::string &pass, int port, int serial )
+Server::Server(std::string pass, int port, int serial )
 {
     if (pass.length() < 2)  
         throw "can't accept this password";
@@ -77,9 +77,17 @@ void    Server::createChannel(Channel *channel)
 
 void    Server::removeChannel(Channel *channel)
 {
-   std::vector<Channel *>::iterator it = std::find(this->channels.begin(), this->channels.end(), channel);
-   if (it != this->channels.end())
-        this->channels.erase(it);
+   std::vector<Channel *>::iterator it = this->channels.begin();
+   while (it != this->channels.end())
+   {
+        if (*it == channel)
+            break;
+        it++;
+   }
+   if (it == this->channels.end())
+        return ;
+    delete channel;
+    this->channels.erase(it);
 }
 
 
@@ -94,9 +102,29 @@ void    Server::addClient(Client *client)
 
 void    Server::removeClient(Client *client)
 {
-    std::vector<Client *>::iterator it = std::find(this->clients.begin(), this->clients.end(), client);
-   if (it != this->clients.end())
-        this->clients.erase(it);
+
+    if (client == nullptr)
+        {
+            /*handle error acordinly*/
+            return ;
+        }
+    std::vector<Client *>::iterator it = this->clients.begin();
+    while (it != this->clients.end())
+    {
+                    std::cout << this->clients.size()<< " " << client << " " << *it << std::endl;
+
+        if (*it == client)
+        {
+            break ;
+        }
+  
+        it++;
+    }
+    if (it == this->clients.end())
+        return ;
+    delete client;
+    this->clients.erase(it);
+    std::cout << "client disconected" << std::endl;
 }
 
 
@@ -159,8 +187,22 @@ void    Server::goBindSocket()
 void    Server::getEvent(int poll_num)
 {
     if (fds[0].revents & 1)
+    {
         this->acceptNewClient();
+        poll_num--;
+    }
+    for (size_t i = 0; i < fds.size(); i++)
+    {
+        if (fds[i].revents & 1)
+        {
+            if (this->get_message(fds[i].fd, i) == -1)
+                i--;
+            poll_num--;
+        }
+    }
+    
 }
+
 void    Server::acceptNewClient()
 {
     struct  sockaddr_in ad;
@@ -175,7 +217,41 @@ void    Server::acceptNewClient()
     this->fds.push_back((struct pollfd){fd, POLLIN, 0});
     int clientPort = ntohs(ad.sin_port);
     std::string clientHost(inet_ntoa(ad.sin_addr));
-    // Client *client = new Client();
-    // this->addClient(client);
+    Client *client = new Client();
+    this->addClient(client);
+    std::cout << port << " " << clientHost << std::endl;
+    this->fdmapping.insert(std::make_pair(fd, client));
+    for (auto& t : fdmapping)
+        std::cout << t.first << " " << t.second << "\n";
+
 }
 
+int    Server::get_message(int fd, int index)
+{
+    char    buffer[1024];
+    bzero(buffer, 1024);
+    int res = recv(fd, buffer, 1000, 0);
+    if (res == 0)
+    {
+        this->removeClient( this->get_client_adress(fd));
+        this->fds.erase(this->fds.begin() + index);
+        index--;
+        return -1;
+    
+    }
+    return 0;
+}
+Client* Server::get_client_adress(int fd)
+{
+    Client* client;
+    try
+    {
+    client   =fdmapping.at(fd);
+    fdmapping.erase(fd);
+    }
+    catch (...)
+    {
+        return NULL;
+    }
+    return client;
+}
