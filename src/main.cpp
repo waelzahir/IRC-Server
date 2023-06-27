@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: pp <pp@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:05:11 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/06/22 23:06:07 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/06/27 19:24:54 by pp               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/Server.hpp"
 int main(void)
 {
-	/* code */
+	Server serv("pas", 9000);
+	while (1)
+	serv.connect();
 	return 0;
 }

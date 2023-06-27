@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: pp <pp@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/06/24 00:16:42 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/06/27 19:31:30 by pp               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,13 @@ void    Server::connect()
 {
     /* only accepting clients here for now */
     int poll_num;
-
+    for (int i = 0; i < Mqueue.size(); i++)
+    {
+        std::cout << Mqueue.front().second << std::endl;
+        Mqueue.pop();
+        std::cout << i << " queue printed " << std::endl;
+ 
+    }
     poll_num = poll(&this->fds[0], this->fds.size(), 100);
     if (poll_num == 0)
         return ;
@@ -111,7 +117,7 @@ void    Server::removeClient(Client *client)
     std::vector<Client *>::iterator it = this->clients.begin();
     while (it != this->clients.end())
     {
-                    std::cout << this->clients.size()<< " " << client << " " << *it << std::endl;
+        std::cout << this->clients.size()<< " " << client << " " << *it << std::endl;
 
         if (*it == client)
         {
@@ -221,9 +227,7 @@ void    Server::acceptNewClient()
     this->addClient(client);
     std::cout << port << " " << clientHost << std::endl;
     this->fdmapping.insert(std::make_pair(fd, client));
-    for (auto& t : fdmapping)
-        std::cout << t.first << " " << t.second << "\n";
-
+    messagemap.insert(std::make_pair(fd, ""));
 }
 
 int    Server::get_message(int fd, int index)
@@ -234,11 +238,14 @@ int    Server::get_message(int fd, int index)
     if (res == 0)
     {
         this->removeClient( this->get_client_adress(fd));
+        fdmapping.erase(fd);
         this->fds.erase(this->fds.begin() + index);
         index--;
         return -1;
     
     }
+    messagemap[fd] += buffer;
+    this->pushToQueue(fd);
     return 0;
 }
 Client* Server::get_client_adress(int fd)
@@ -246,12 +253,21 @@ Client* Server::get_client_adress(int fd)
     Client* client;
     try
     {
-    client   =fdmapping.at(fd);
-    fdmapping.erase(fd);
+        client   =fdmapping.at(fd);
     }
     catch (...)
     {
         return NULL;
     }
     return client;
+}
+void    Server::pushToQueue(int fd)
+{
+    size_t pos;
+    pos = messagemap[fd].find("\r\n",0);
+    if (pos == std::string::npos)
+        return ;
+    std::string full = messagemap[fd].substr(0, pos+2);
+    this->Mqueue.push(make_pair(fd, full));
+    messagemap[fd].erase(0, pos+2);
 }
