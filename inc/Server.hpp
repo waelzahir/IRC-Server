@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: pp <pp@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/06/24 00:11:04 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/06/27 19:13:59 by pp               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,13 @@ class Server
         void    acceptNewClient();
         int    get_message(int fd,int index);
         Client *get_client_adress(int fd);
+        void    pushToQueue(int fd);
 
         int listensocket;
         std::string password;
         std::vector<struct pollfd> fds;
         std::map<int , Client *>   fdmapping;
+        std::map<int , std::string> messagemap; /*this map have full and the fragmented request than need to be full to be pushed to the message requests*/
+        std::queue<std::pair<int, std::string> > Mqueue; /* this queue contains the only full request containing (\r\n)*/
 };
 #endif
