@@ -4,6 +4,15 @@
 # define USERLEN 12
 
 
+
+
+# define I_MODE 1
+# define T_MODE (1 << 1)
+# define K_MODE (1 << 2)
+# define O_MODE (1 << 3)
+# define L_MODE (1 << 4)
+
+
 # define ERR_NEEDMOREPARAMS(client, command) client + " " + command + " :Not enough parameters"
 # define ERR_ALREADYREGISTERED(client) client + " :You may not reregister"
 # define ERR_PASSWDMISMATCH(client) client + " :Password incorrect"

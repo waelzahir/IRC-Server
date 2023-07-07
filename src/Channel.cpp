@@ -5,7 +5,7 @@ Channel::Channel()
 {
 	std::cout << "Channel Constructor called" << std::endl;
 }
-Channel::Channel(std::string name) : _name(name)
+Channel::Channel(std::string name) : _name(name) , mode(0)
 {
 	
 }
@@ -43,6 +43,20 @@ void Channel::remove_user(User &user)
 	it = find(_users.begin(), _users.end(), user);
 	if (it != _users.end())
 		_users.erase(it);
+}
+
+void Channel::set_mode(int flag)
+{
+	mode |= flag;
+}
+void Channel::unset_mode(int flag)
+{
+	mode &= ~flag;
+
+}
+bool Channel::get_mode_status(int flag)
+{
+	return (mode & flag);
 }
 /*** --------------------------------- ACCESSOR ---------------------------------*/
 

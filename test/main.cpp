@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 05:13:05 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/06 20:26:41 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/07 22:18:17 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	std::string clientName = "John";
-	std::string command = "";
-    std::string errorMessage = ERR_NEEDMOREPARAMS(clientName, command);
-    std::cout << errorMessage << std::endl;
+    char mode = 0;
+    mode |= K_MODE;
+    mode &= ~K_MODE;
+	cout <<"hi: " << (int)mode << " hello" << endl;
     return 0;
-		
+		 
 }
+
+   

@@ -14,6 +14,7 @@ class Channel
 public:
 	std::string				_name;
 	std::vector<User>		_users;
+	char					mode;
 
 	Channel();
 	Channel(std::string);
@@ -22,6 +23,11 @@ public:
 
 	void add_user(User &);
 	void remove_user(User &);
+
+	void set_mode(int flag);
+	void unset_mode(int flag);
+	bool get_mode_status(int flag);
+
 	Channel&	operator=(Channel const &);
 };
 
