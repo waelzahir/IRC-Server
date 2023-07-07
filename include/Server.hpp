@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/04 19:42:31 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/03 18:25:30 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ class Server
         void    goBindSocket();
         void    getEvent(int poll_num);
         void    acceptNewClient();
-        int     get_message(int fd,int index);
+        int    get_message(int fd,int index);
         Client *get_client_adress(int fd);
         void    pushToQueue(int fd);
 

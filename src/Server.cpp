@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/06 19:38:46 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/07 20:17:42 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,10 +270,13 @@ Client* Server::get_client_adress(int fd)
 void    Server::pushToQueue(int fd)
 {
     size_t pos;
-    pos = messagemap[fd].find("\r\n",0);
-    if (pos == std::string::npos)
-        return ;
-    std::string full = messagemap[fd].substr(0, pos+2);
-    this->Mqueue.push(make_pair(fd, full));
-    messagemap[fd].erase(0, pos+2);
+    while (1)
+    {
+        pos = messagemap[fd].find("\r\n",0);
+        if (pos == std::string::npos)
+            break ;
+        std::string full = messagemap[fd].substr(0, pos);
+        this->Mqueue.push(make_pair(fd, full));
+        messagemap[fd].erase(0, pos+2);
+    }
 }
