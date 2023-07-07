@@ -3,7 +3,6 @@
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
 Client::Client() : fd(-1)
 {
-	std::cout << "Client Constructor called" << std::endl;
 }
 
 Client::Client(const Client &other)
@@ -14,30 +13,36 @@ Client::Client(const Client &other)
 /*** -------------------------------- DESTRUCTOR --------------------------------*/
 Client::~Client()
 {
-	std::cout << "Client Destructor called" << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/
 Client&   Client::operator=(Client const & other )
 {
-	(void)other;
+	this->fd = other.fd;
+	this->_client_user = other._client_user;
 	return *this;
 }
 
 
 /*** --------------------------------- METHODS ----------------------------------*/
+
+
+void Client::set_client_user(User &user)
+{
+	_client_user = user;
+}
 void Client::join_channel(Channel& channel)
 {
 	std::vector<User>::iterator it;
-	it = find(channel._users.begin(), channel._users.end(), _client_user.nickname);
+	it = find(channel._users.begin(), channel._users.end(), _client_user);
 	if (it == channel._users.end())
-		channel._users.push_back(User(_client_user.username, _client_user.nickname));
+		channel._users.push_back(_client_user);
 }
 
 void Client::leave_channel(Channel& channel)
 {
 	std::vector<User>::iterator it;
-	it = find(channel._users.begin(), channel._users.end(), _client_user.nickname);
+	it = find(channel._users.begin(), channel._users.end(), _client_user);
 	if (it != channel._users.end())
 		channel._users.erase(it);
 }

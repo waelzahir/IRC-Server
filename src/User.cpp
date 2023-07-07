@@ -28,7 +28,13 @@ User&   User::operator=(User const & other )
 	this->username = other.username;
 	return *this;
 }
-bool User::operator== (const User &_o)
+bool User::operator == (const User &_o)
+{
+	if (_o.nickname == this->nickname)
+		return true;
+	return false;
+}
+bool User::operator == (User &_o)
 {
 	if (_o.nickname == this->nickname)
 		return true;

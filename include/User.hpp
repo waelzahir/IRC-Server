@@ -19,6 +19,7 @@ public:
 
 	User&	operator=(User const &);
 	bool operator == (const User &);
+	bool operator == ( User &);
 };
 
 #endif /* * SPAN_H */
