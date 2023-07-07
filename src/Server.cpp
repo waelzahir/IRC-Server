@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pp <pp@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/06/27 19:31:30 by pp               ###   ########.fr       */
+/*   Updated: 2023/07/06 19:38:46 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/Server.hpp"
+#include "Server.hpp"
 
 /* public methods */
 
 Server::~Server()
 {
-        while (clients.size())
+    while (clients.size())
     {
         // close(clients[0].socket);
         delete clients[0];
@@ -31,6 +31,7 @@ Server::~Server()
 
 Server::Server(std::string pass, int port, int serial )
 {
+    std::cout << "constructor " << pass<< std::endl;
     if (pass.length() < 2)  
         throw "can't accept this password";
     this->password = pass;
@@ -52,11 +53,14 @@ void    Server::connect()
 {
     /* only accepting clients here for now */
     int poll_num;
-    for (int i = 0; i < Mqueue.size(); i++)
+
+    poll_num = 0;
+    for (size_t i = 0; i < this->Mqueue.size(); i++)
     {
-        std::cout << Mqueue.front().second << std::endl;
+        // std::cout <<   "size " << this->Mqueue.size() << std::endl;
+        // std::cout << Mqueue.front().second << std::endl;
         Mqueue.pop();
-        std::cout << i << " queue printed " << std::endl;
+        // std::cout << i << " queue printed " << std::endl;
  
     }
     poll_num = poll(&this->fds[0], this->fds.size(), 100);
@@ -245,6 +249,8 @@ int    Server::get_message(int fd, int index)
     
     }
     messagemap[fd] += buffer;
+    if (res > 0)
+        std::cout << "buffer : "<<buffer << std::endl << "end  buffer "<<std::endl;
     this->pushToQueue(fd);
     return 0;
 }

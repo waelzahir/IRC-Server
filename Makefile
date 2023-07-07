@@ -6,7 +6,7 @@
 #    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/06/05 07:10:26 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/07/03 18:31:50 by tel-mouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ endif
 
 
 # #################HEADERS###########################
-HEADERS = *.hpp
+HEADERS = $(wildcard *.hpp)
 HEADERS := $(addprefix include/, $(HEADERS))
 # #################HEADERS_utils###########################
 UHEADERS = 
@@ -41,15 +41,16 @@ UHEADERS := $(addprefix include/, $(UHEADERS))
 RM = rm -rf
 CC = g++ 
 HEADERSFLAGS = -I include
-CFLAG =  -Wall -Wextra -Werror -g $(HEADERSFLAGS)
-
+CFLAG = -g $(HEADERSFLAGS)
+#  -Wall -Wextra -Werror 
 # #################LOG_File##########################
 
 LOG_FILE = lastcompiled.log
 
 # ################SRCS_Objs##########################
 
-SRC = 	main.cpp
+SRC = Channel.cpp  IrcSystem.cpp  Server.cpp  main.cpp\
+	Client.cpp   Message.cpp    User.cpp
 OBJ = $(addprefix obj/, $(SRC:.cpp=.o))
 
 # ################SRCS_Objs_Utils####################

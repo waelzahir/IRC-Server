@@ -5,16 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 23:05:11 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/06 18:41:00 by tel-mouh         ###   ########.fr       */
+/*   Created: 2023/07/01 05:13:05 by tel-mouh          #+#    #+#             */
+/*   Updated: 2023/07/06 20:26:41 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IrcSystem.hpp"
-int main(void)
+
+#include <sys/select.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <vector>
+# include <iostream>
+using namespace std;
+# include "../include/macros.h"
+
+int main(int argc, char const *argv[])
 {
-	IrcSystem irc;
-	irc.set_server(Server("pas", 9000));
-	irc.start_loop();	
-	return 0;
+	std::string clientName = "John";
+	std::string command = "";
+    std::string errorMessage = ERR_NEEDMOREPARAMS(clientName, command);
+    std::cout << errorMessage << std::endl;
+    return 0;
+		
 }
