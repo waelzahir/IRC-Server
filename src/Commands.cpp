@@ -40,6 +40,12 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 {
     if (funcname == "CAP")
         return &Commands::cap;
+	if (funcname == "USER")
+        return &Commands::user;
+	if (funcname == "PASS")
+        return &Commands::pass;
+	if (funcname == "NICK")
+        return &Commands::nick;
     return NULL;
 }
 
@@ -53,7 +59,20 @@ void	Commands::cap(Client *client, std::stringstream &stream)
 	send(client->fd, res.c_str(), res.length(), 0);
 
 }
+void	Commands::pass(Client *client, std::stringstream &stream)
+{
+	std::cout << "PASS FFUNC" << std::endl;
+}
+void	Commands::nick(Client *client, std::stringstream &stream)
+{
+		std::cout << "nick FFUNC" << std::endl;
 
+}
+void	Commands::user(Client *client, std::stringstream &stream)
+{
+		std::cout << "USER FFUNC" << std::endl;
+
+}
 /*** --------------------------------- ACCESSOR ---------------------------------*/
 
 /*** --------------------------------- ACEPTION ---------------------------------*/
