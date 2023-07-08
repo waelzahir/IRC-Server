@@ -6,7 +6,7 @@
 #    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/07/08 17:10:30 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/07/08 17:26:46 by tel-mouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,13 +49,12 @@ LOG_FILE = lastcompiled.log
 
 # ################SRCS_Objs##########################
 
-SRC = Channel.cpp  IrcSystem.cpp  Server.cpp  main.cpp\
-	Client.cpp   Message.cpp    User.cpp 
+SRC = $(notdir $(wildcard src/*.cpp))
 OBJ = $(addprefix obj/, $(SRC:.cpp=.o))
 
 # ################SRC_COMMANDS####################
 
-SRC_COMMANDS =	Commands.cpp
+SRC_COMMANDS =	$(notdir $(wildcard src/commands/*.cpp))
 OBJ_COMMANDS = $(addprefix obj/commands/, $(SRC_COMMANDS:.cpp=.o))
 # ################SRCS_Objs_Utils####################
 
