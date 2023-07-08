@@ -49,30 +49,9 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
     return NULL;
 }
 
-void	Commands::cap(Client *client, std::stringstream &stream)
-{
-	std::string req;
-	std::getline(stream, req, ' ');
-	if (req == "END")
-		return ;
-	std::string res(":ircserv CAP * LS :\r\n");
-	send(client->fd, res.c_str(), res.length(), 0);
 
-}
-void	Commands::pass(Client *client, std::stringstream &stream)
-{
-	std::cout << "PASS FFUNC" << std::endl;
-}
-void	Commands::nick(Client *client, std::stringstream &stream)
-{
-		std::cout << "nick FFUNC" << std::endl;
 
-}
-void	Commands::user(Client *client, std::stringstream &stream)
-{
-		std::cout << "USER FFUNC" << std::endl;
 
-}
 /*** --------------------------------- ACCESSOR ---------------------------------*/
 
 /*** --------------------------------- ACEPTION ---------------------------------*/

@@ -1,6 +1,9 @@
 ---------------------------------------------------
 src/commands/pass.cpp
 src/commands/Commands.cpp
+---------------------------------------------------
+src/commands/pass.cpp
+src/commands/Commands.cpp
 src/main.cpp
 src/User.cpp
 src/Server.cpp

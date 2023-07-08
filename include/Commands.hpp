@@ -9,7 +9,8 @@
 # include <math.h>
 # include <sstream>
 # include "Client.hpp"
-       #include <sys/socket.h>
+# include <sys/socket.h>
+# include "macros.h"
 
 class Commands
 {
