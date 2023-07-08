@@ -1,9 +1,13 @@
 #include "Commands.hpp"
 
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
-Commands::Commands()
+Commands::Commands() 
 {
-	std::cout << "Commands Constructor called" << std::endl;
+	// std::cout << "Commands Constructor called" << std::endl;
+}
+Commands::Commands(Server *_server) : server(_server)
+{
+	// std::cout << "Commands Constructor called" << std::endl;
 }
 
 Commands::Commands(const Commands &other)
@@ -14,7 +18,7 @@ Commands::Commands(const Commands &other)
 /*** -------------------------------- DESTRUCTOR --------------------------------*/
 Commands::~Commands()
 {
-	std::cout << "Commands Destructor called" << std::endl;
+	// std::cout << "Commands Destructor called" << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/
@@ -38,18 +42,24 @@ void	Commands::execute(Client *client, std::string Command)
 }
 void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::stringstream&)
 {
-    if (funcname == "CAP")
-        return &Commands::cap;
-	else if (funcname == "USER")
-        return &Commands::user;
-	else if (funcname == "PASS")
-        return &Commands::pass;
-	else if (funcname == "NICK")
-        return &Commands::nick;
-	else if (funcname == "MODE")
-        return &Commands::mode;
-	else
+	typedef void (Commands::*cmptr)(Client*, std::stringstream&);
+
+	std::map<std::string, cmptr> commands;
+
+	commands["CAP"] = &Commands::cap;
+	commands["USER"] = &Commands::user;
+	commands["PASS"] = &Commands::pass;
+	commands["NICK"] = &Commands::nick;
+	commands["MODE"] = &Commands::mode;
+	commands["JOIN"] = &Commands::join;
+	try
+	{
+		return commands.at(funcname);
+	}
+	catch(const std::exception& e)
+	{
     	return NULL;
+	}
 }
 
 

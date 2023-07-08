@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ReqParser.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:15:10 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/05 18:15:11 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/08 22:31:48 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ ReqParser::ReqParser(std::string command)
             }
         pos = token.find( ',', 0);
         if (token.size() && pos != std::string::npos)
-            tokens.push_back(std::make_pair(MULTI, token));
+            tokens.push_back(std::make_pair(1, token));
         else if (token.size())
-            tokens.push_back(std::make_pair(ALONE, token));
+            tokens.push_back(std::make_pair(0, token));
     }
 }
 
@@ -38,7 +38,7 @@ void    ReqParser::ParseSubToken(std::string command, std::string& token)
 {
     size_t pos = command.find(token, 0);
     command.erase(0, pos + 1);
-    this->tokens.push_back(std::make_pair(ALONE, command));
+    this->tokens.push_back(std::make_pair(0, command));
 }
 int ReqParser::getStatus()
 {
@@ -52,7 +52,7 @@ void    ReqParser::ListedParse(std::pair<int, std::string> to)
     std::string token;
     while (std::getline(strm, token, ','))
     {
-        this->tokens.insert(this->tokens.begin() + i, std::make_pair(MULTISPLI, token));
+        this->tokens.insert(this->tokens.begin() + i, std::make_pair(2, token));
         i++;
 
     }

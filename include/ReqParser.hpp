@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ReqParser.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:15:14 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/05 18:15:15 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/08 23:15:41 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ enum {
     MULTI,
     MULTISPLI
 };
-
+ 
 class ReqParser
 {
     public:
@@ -31,6 +31,6 @@ class ReqParser
         
     private:
         void    ParseSubToken(std::string command, std::string& token);
-        std::vector <std::pair<int, std::string>>  tokens; // the first element is the type of the token, he second is the token;
+        std::vector <std::pair<int, std::string> >  tokens; // the first element is the type of the token, he second is the token;
 };
 #endif

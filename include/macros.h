@@ -4,8 +4,6 @@
 # define USERLEN 12
 
 
-
-
 # define I_MODE 1
 # define T_MODE (1 << 1)
 # define K_MODE (1 << 2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/08 03:00:57 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/08 22:36:37 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,18 @@ Server::~Server()
 
 Server::Server(std::string pass, int port, int serial )
 {
+    std::stringstream serialto_str;
+    std::string serial_str;
+    
+    serialto_str << serial;
+    serialto_str >> serial_str;
+     
     std::cout << "constructor " << pass << "on port "<< port << std::endl;
     if (pass.length() < 2)  
         throw "can't accept this password";
     this->password = pass;
     this->port = port;
-    this->serverName = "Ircsrvr" + std::to_string(serial);
+    this->serverName = "Ircsrvr" + serial_str;
     this->createSocket();
     this->makeNonBlockSocket();
     this->makePortReusable();
@@ -105,7 +111,7 @@ void    Server::addClient(Client *client)
 void    Server::removeClient(Client *client)
 {
 
-    if (client == nullptr)
+    if (client == NULL)
         {
             /*handle error acordinly*/
             return ;
