@@ -1,4 +1,16 @@
 ---------------------------------------------------
+src/commands/pass.cpp
+src/commands/Commands.cpp
+src/main.cpp
+src/User.cpp
+src/Server.cpp
+src/ReqParser.cpp
+src/Message.cpp
+src/IrcSystem.cpp
+src/Client.cpp
+src/Channel.cpp
+---------------------------------------------------
+src/commands/pass.cpp
 src/commands/Commands.cpp
 src/main.cpp
 src/User.cpp

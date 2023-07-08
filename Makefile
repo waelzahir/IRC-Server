@@ -6,7 +6,7 @@
 #    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/07/08 17:26:46 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/07/08 17:35:41 by tel-mouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,7 @@ endif
 
 
 # #################HEADERS###########################
-HEADERS = $(wildcard *.hpp)
-HEADERS := $(addprefix include/, $(HEADERS))
-# #################HEADERS_utils###########################
-UHEADERS = 
-UHEADERS := $(addprefix include/, $(UHEADERS))
+HEADERS = $(wildcard include/*.hpp) $(wildcard include/*.h)
 
 # ################COMMANDS###########################
 
@@ -116,7 +112,7 @@ $(NAME):  $(OBJ_ALLS)
 curser:
 	@ tput cvvis
 
-obj/%.o : src/%.cpp  
+obj/%.o : src/%.cpp  $(HEADERS)
 	@ mkdir -p $(dir $@)
 	@$ nu=$x ; if [[ $$nu -eq -1 ]] ; then \
 	printf ${RE}"🔷 Making the--> "${NC} \
