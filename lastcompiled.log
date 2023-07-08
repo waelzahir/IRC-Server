@@ -1,9 +1,0 @@
----------------------------------------------------
-src/commands/Commands.cpp
-src/User.cpp
-src/Message.cpp
-src/Client.cpp
-src/main.cpp
-src/Server.cpp
-src/IrcSystem.cpp
-src/Channel.cpp
