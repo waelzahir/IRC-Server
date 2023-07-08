@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+         #
+#    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/07/08 02:50:38 by ozahir           ###   ########.fr        #
+#    Updated: 2023/07/08 17:10:30 by tel-mouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,9 +50,13 @@ LOG_FILE = lastcompiled.log
 # ################SRCS_Objs##########################
 
 SRC = Channel.cpp  IrcSystem.cpp  Server.cpp  main.cpp\
-	Client.cpp   Message.cpp    User.cpp Commands.cpp
+	Client.cpp   Message.cpp    User.cpp 
 OBJ = $(addprefix obj/, $(SRC:.cpp=.o))
 
+# ################SRC_COMMANDS####################
+
+SRC_COMMANDS =	Commands.cpp
+OBJ_COMMANDS = $(addprefix obj/commands/, $(SRC_COMMANDS:.cpp=.o))
 # ################SRCS_Objs_Utils####################
 
 # SRC_UTILS =		
@@ -61,7 +65,7 @@ OBJ = $(addprefix obj/, $(SRC:.cpp=.o))
 
 # ################OBJSALL############################
 
-OBJ_ALLS =	$(OBJ) 
+OBJ_ALLS =	$(OBJ) $(OBJ_COMMANDS)
 
 # ################OBJDIR############################
 
@@ -114,7 +118,7 @@ curser:
 	@ tput cvvis
 
 obj/%.o : src/%.cpp  
-	@ mkdir -p $(OBJ_DIRS)
+	@ mkdir -p $(dir $@)
 	@$ nu=$x ; if [[ $$nu -eq -1 ]] ; then \
 	printf ${RE}"🔷 Making the--> "${NC} \
 	 ; fi

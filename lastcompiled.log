@@ -1,9 +1,5 @@
 ---------------------------------------------------
-src/Commands.cpp
----------------------------------------------------
-src/Commands.cpp
----------------------------------------------------
-src/Commands.cpp
+src/commands/Commands.cpp
 src/User.cpp
 src/Message.cpp
 src/Client.cpp
