@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:05:11 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/06 18:41:00 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:27:32 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@ int main(void)
 {
 	IrcSystem irc;
 	irc.set_server(Server("pas", 9000));
-	irc.start_loop();	
+	irc.start_loop();
 	return 0;
 }

@@ -24,6 +24,7 @@ public:
 	void	pass(Client *client, std::stringstream &stream);
 	void	nick(Client *client, std::stringstream &stream);
 	void	user(Client *client, std::stringstream &stream);
+	void	mode(Client *client, std::stringstream &stream);
 
 
 	Commands&	operator=(Commands const &);

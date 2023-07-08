@@ -13,12 +13,15 @@ class Client
 {
 public:
 	int fd;
+	int port;
+	std::string host;
+	std::string messages;
 	User _client_user;
 
 	Client();
 	Client(Client const &);
 	~Client();
-
+	
 	void set_client_user(User &);
 	void join_channel(Channel &);
 	void leave_channel(Channel &);

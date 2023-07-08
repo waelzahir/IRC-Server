@@ -40,16 +40,17 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 {
     if (funcname == "CAP")
         return &Commands::cap;
-	if (funcname == "USER")
+	else if (funcname == "USER")
         return &Commands::user;
-	if (funcname == "PASS")
+	else if (funcname == "PASS")
         return &Commands::pass;
-	if (funcname == "NICK")
+	else if (funcname == "NICK")
         return &Commands::nick;
-    return NULL;
+	else if (funcname == "MODE")
+        return &Commands::mode;
+	else
+    	return NULL;
 }
-
-
 
 
 /*** --------------------------------- ACCESSOR ---------------------------------*/
