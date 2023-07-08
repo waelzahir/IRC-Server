@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 05:13:05 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/07 22:18:17 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:10:40 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    char mode = 0;
-    mode |= K_MODE;
-    mode &= ~K_MODE;
-	cout <<"hi: " << (int)mode << " hello" << endl;
+    // char mode = 0;
+    // mode |= K_MODE;
+    // mode &= ~K_MODE;
+	// cout <<"hi: " << (int)mode << " hello" << endl;
+
+    string user = "zebi";
+    // use std::string; 
+
+
+    string error = ERR_NONICKNAMEGIVEN(user);
+    cout << error << endl;  
     return 0;
 		 
 }
