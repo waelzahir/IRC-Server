@@ -8,8 +8,9 @@
 # include <algorithm>
 # include <math.h>
 # include <sstream>
+# include "Client.hpp"
+       #include <sys/socket.h>
 
-class Client;
 class Commands
 {
 public:

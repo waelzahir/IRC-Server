@@ -28,6 +28,7 @@ void	Commands::execute(Client *client, std::string Command)
 {
 	std::stringstream strm(Command);
 	std::string name;
+	std::cout <<  strm.str() << std::endl;
 	if (!std::getline(strm, name, ' '))
 		return ;
 	void  (Commands::*ptr)(Client*, std::stringstream&) = this->getCommand(name);
@@ -44,10 +45,12 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 
 void	Commands::cap(Client *client, std::stringstream &stream)
 {
-	std::string name;
-	if (!std::getline(stream, name, ' '))
-		return ; 
-	std::cout <<  name<< std::endl;
+	std::string req;
+	std::getline(stream, req, ' ');
+	if (req == "END")
+		return ;
+	std::string res(":ircserv CAP * LS :\r\n");
+	send(client->fd, res.c_str(), res.length(), 0);
 
 }
 
