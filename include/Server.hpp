@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/03 18:25:30 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/08 02:48:11 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 #include "Client.hpp"
 #include "Channel.hpp"
 #include "Message.hpp"
+#include "Commands.hpp"
 class Server
 {
     public:
@@ -66,6 +67,7 @@ class Server
         int    get_message(int fd,int index);
         Client *get_client_adress(int fd);
         void    pushToQueue(int fd);
+        void    execReq();
 
 };
 #endif

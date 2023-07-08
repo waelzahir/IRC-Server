@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
+#    By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/07/03 18:31:50 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/07/08 02:50:38 by ozahir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ LOG_FILE = lastcompiled.log
 # ################SRCS_Objs##########################
 
 SRC = Channel.cpp  IrcSystem.cpp  Server.cpp  main.cpp\
-	Client.cpp   Message.cpp    User.cpp
+	Client.cpp   Message.cpp    User.cpp Commands.cpp
 OBJ = $(addprefix obj/, $(SRC:.cpp=.o))
 
 # ################SRCS_Objs_Utils####################

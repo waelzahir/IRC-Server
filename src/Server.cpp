@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/07 20:17:42 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/08 03:00:57 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Server::~Server()
 {
     while (clients.size())
     {
-        // close(clients[0].socket);
+        close(clients[0]->fd);
         delete clients[0];
         clients.erase(clients.begin());
     }
@@ -31,7 +31,7 @@ Server::~Server()
 
 Server::Server(std::string pass, int port, int serial )
 {
-    std::cout << "constructor " << pass<< std::endl;
+    std::cout << "constructor " << pass << "on port "<< port << std::endl;
     if (pass.length() < 2)  
         throw "can't accept this password";
     this->password = pass;
@@ -54,19 +54,11 @@ void    Server::connect()
     /* only accepting clients here for now */
     int poll_num;
 
-    poll_num = 0;
-    for (size_t i = 0; i < this->Mqueue.size(); i++)
-    {
-        // std::cout <<   "size " << this->Mqueue.size() << std::endl;
-        // std::cout << Mqueue.front().second << std::endl;
-        Mqueue.pop();
-        // std::cout << i << " queue printed " << std::endl;
- 
-    }
     poll_num = poll(&this->fds[0], this->fds.size(), 100);
     if (poll_num == 0)
         return ;
     this->getEvent(poll_num);
+    this->execReq();
 }
 
 
@@ -229,6 +221,7 @@ void    Server::acceptNewClient()
     std::string clientHost(inet_ntoa(ad.sin_addr));
     Client *client = new Client();
     this->addClient(client);
+    client->fd = fd;
     std::cout << port << " " << clientHost << std::endl;
     this->fdmapping.insert(std::make_pair(fd, client));
     messagemap.insert(std::make_pair(fd, ""));
@@ -249,8 +242,6 @@ int    Server::get_message(int fd, int index)
     
     }
     messagemap[fd] += buffer;
-    if (res > 0)
-        std::cout << "buffer : "<<buffer << std::endl << "end  buffer "<<std::endl;
     this->pushToQueue(fd);
     return 0;
 }
@@ -278,5 +269,17 @@ void    Server::pushToQueue(int fd)
         std::string full = messagemap[fd].substr(0, pos);
         this->Mqueue.push(make_pair(fd, full));
         messagemap[fd].erase(0, pos+2);
+    }
+}
+
+void    Server::execReq()
+{
+    if (!this->Mqueue.size())
+        return ;
+    while (this->Mqueue.size())
+    {
+        Commands command;
+        command.execute( get_client_adress(this->Mqueue.front().first) ,this->Mqueue.front().second);
+        this->Mqueue.pop();
     }
 }
