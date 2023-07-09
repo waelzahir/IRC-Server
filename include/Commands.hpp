@@ -13,14 +13,14 @@
 # include <sys/socket.h>
 # include "macros.h"
 # include "Server.hpp"
-
+class Server;
 class Commands
 {
-	private:
-		Server *server;
+private:
+	Server *_server;
 public:
 	Commands();
-	Commands(Server *);
+	Commands(Server *name);
 	Commands(Commands const &);
 	~Commands();
 	void	execute(Client *client, std::string Command);

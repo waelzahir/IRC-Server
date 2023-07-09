@@ -5,7 +5,7 @@ Commands::Commands()
 {
 	// std::cout << "Commands Constructor called" << std::endl;
 }
-Commands::Commands(Server *_server) : server(_server)
+Commands::Commands(Server *__server) : _server(__server)
 {
 	// std::cout << "Commands Constructor called" << std::endl;
 }

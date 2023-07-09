@@ -10,6 +10,7 @@
 # include <Server.hpp>
 # include <User.hpp>
 # include <algorithm>
+
 class IrcSystem
 {
 private:
