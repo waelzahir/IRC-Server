@@ -39,5 +39,4 @@ void	Commands::nick(Client *client, std::stringstream &stream)
 	}
 	this->server->nickmak.insert(std::make_pair(token, client));
 	client->_client_user.nickname = token;
-	client->_client_user.activateAuth();
 }

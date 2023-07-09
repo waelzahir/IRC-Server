@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ReqParser.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:15:10 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/08 22:31:48 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/09 23:02:33 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ReqParser.hpp"
 #include <sstream>
 
-ReqParser::ReqParser(std::string command)
+ReqParser::ReqParser(std::stringstream &stream)
 {
-    std::stringstream strm(command);
     std::string token;
     
     size_t pos;
-    while (std::getline(strm, token, ' '))
+    while (std::getline(stream, token, ' '))
     {
         if (token[0] == ':')
             {
-                this->ParseSubToken(command, token);
+                this->ParseSubToken(stream.str(), token);
                 break ;
             }
         pos = token.find( ',', 0);
