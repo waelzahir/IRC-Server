@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 03:35:48 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/09 03:49:12 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Server::Server(std::string pass, int port, int serial )
     serialto_str << serial;
     serialto_str >> serial_str;
      
-    std::cout << "constructor " << pass << "on port "<< port << std::endl;
+    std::cout << "constructor " << pass << " on port "<< port << std::endl;
     if (pass.length() < 2)  
         throw "can't accept this password";
     this->password = pass;

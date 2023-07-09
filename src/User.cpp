@@ -1,7 +1,7 @@
 #include "User.hpp"
 
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
-User::User()
+User::User(): connected(0)
 {
 	// std::cout << "User Constructor called" << std::endl;
 }
