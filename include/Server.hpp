@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 04:11:12 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/09 22:34:08 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,12 @@ class Server
         std::string serverName; /*wht not server name ??*/
         int         port;
         std::vector<Channel *> channels;
-        std::vector<Client  *> clients;
         std::string password;
         std::map<std::string, Client *> nickmak;
     private:
         int listensocket;
         std::vector<struct pollfd> fds;
-        std::map<int , Client *>   fdmapping;
-        std::map<int , std::string> messagemap; /*this map have full and the fragmented request than need to be full to be pushed to the message requests*/
+        std::map<int , Client *>   clients;
         std::queue<std::pair<int, std::string> > Mqueue; /* this queue contains the only full request containing (\r\n)*/
 
         void    createSocket();

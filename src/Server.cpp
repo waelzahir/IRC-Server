@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 04:16:33 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/09 22:57:17 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 Server::~Server()
 {
-    while (clients.size())
+    while (this->clients.size())
     {
-        close(clients[0]->fd);
-        delete clients[0];
-        clients.erase(clients.begin());
+        close((this->clients.begin())->second->fd);
+        delete ((this->clients.begin()->second));
+        this->clients.erase(this->clients.begin());
     }
     while (channels.size())
     {
@@ -101,7 +101,7 @@ void    Server::removeChannel(Channel *channel)
 
 void    Server::addClient(Client *client)
 {
-    this->clients.push_back(client);
+    this->clients.insert(std::make_pair(client->fd, client));
 }
 
 
@@ -116,22 +116,17 @@ void    Server::removeClient(Client *client)
             /*handle error acordinly*/
             return ;
         }
-    std::vector<Client *>::iterator it = this->clients.begin();
-    while (it != this->clients.end())
+    try
     {
-        std::cout << this->clients.size()<< " " << client << " " << *it << std::endl;
-
-        if (*it == client)
-        {
-            break ;
-        }
-  
-        it++;
+        this->clients.at(client->fd);
     }
-    if (it == this->clients.end())
+    catch (...)
+    {
         return ;
-    delete client;
-    this->clients.erase(it);
+    }
+    this->clients.erase(client->fd);
+    if (client->_client_user.nickname.length())
+        this->nickmak.erase(client->_client_user.nickname);
     std::cout << "client disconected" << std::endl;
 }
 
@@ -194,12 +189,12 @@ void    Server::goBindSocket()
 
 void    Server::getEvent(int poll_num)
 {
-    if (fds[0].revents & 1)
+    if (fds[0].revents & 1 )
     {
         this->acceptNewClient();
         poll_num--;
     }
-    for (size_t i = 0; i < fds.size(); i++)
+    for (size_t i = 0; i < fds.size() && poll_num; i++)
     {
         if (fds[i].revents & 1)
         {
@@ -223,31 +218,28 @@ void    Server::acceptNewClient()
         return ;
     }
     this->fds.push_back((struct pollfd){fd, POLLIN, 0});
-    int clientPort = ntohs(ad.sin_port);
-    std::string clientHost(inet_ntoa(ad.sin_addr));
     Client *client = new Client();
-    this->addClient(client);
+    client->host =  inet_ntoa(ad.sin_addr);
+    client->port =  ntohs(ad.sin_port);
     client->fd = fd;
-    std::cout << port << " " << clientHost << std::endl;
-    this->fdmapping.insert(std::make_pair(fd, client));
-    messagemap.insert(std::make_pair(fd, ""));
+    this->addClient(client);
 }
 
 int    Server::get_message(int fd, int index)
 {
     char    buffer[1024];
     bzero(buffer, 1024);
+    Client *client = this->get_client_adress(fd);
     int res = recv(fd, buffer, 1000, 0);
     if (res == 0)
     {
-        this->removeClient( this->get_client_adress(fd));
-        fdmapping.erase(fd);
+        this->removeClient(client);
         this->fds.erase(this->fds.begin() + index);
         index--;
         return -1;
     
     }
-    messagemap[fd] += buffer;
+    client->messages += buffer;
     this->pushToQueue(fd);
     return 0;
 }
@@ -256,7 +248,7 @@ Client* Server::get_client_adress(int fd)
     Client* client;
     try
     {
-        client   =fdmapping.at(fd);
+        client  = this->clients.at(fd);
     }
     catch (...)
     {
@@ -267,14 +259,15 @@ Client* Server::get_client_adress(int fd)
 void    Server::pushToQueue(int fd)
 {
     size_t pos;
+    Client *client = this->get_client_adress(fd);
     while (1)
     {
-        pos = messagemap[fd].find("\r\n",0);
+        pos = client->messages.find("\r\n",0);
         if (pos == std::string::npos)
             break ;
-        std::string full = messagemap[fd].substr(0, pos);
+        std::string full = client->messages.substr(0, pos);
         this->Mqueue.push(make_pair(fd, full));
-        messagemap[fd].erase(0, pos+2);
+        client->messages.erase(0, pos+2);
     }
 }
 
