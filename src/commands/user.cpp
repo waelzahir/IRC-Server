@@ -2,5 +2,9 @@
 
 void	Commands::user(Client *client, std::stringstream &stream)
 {
-		std::cout << "USER FFUNC" << std::endl;
+	std::string token;
+	while (std::getline(stream, token, ' '))
+		if (token.length())
+			break ;
+	
 }

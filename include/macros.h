@@ -10,9 +10,9 @@
 # define O_MODE (1 << 3)
 # define L_MODE (1 << 4)
 
-# define ERR_NEEDMOREPARAMS(client, command) client + " " + command + " :Not enough parameters"
-# define ERR_ALREADYREGISTERED(client) client + " :You may not reregister"
-# define ERR_PASSWDMISMATCH(client) client + " :Password incorrect"
+# define ERR_NEEDMOREPARAMS(server ,client, command) server + " 461 "+  client + "PASS" + " :Not enough parameters\r\n"
+# define ERR_ALREADYREGISTERED(server , client) server + " 462 " + client + " PASS"+ " :You may not reregister\r\n"
+# define ERR_PASSWDMISMATCH(server, client) server + " 464 " + client + " :Password incorrect\r\n"
 
 # define ERR_NONICKNAMEGIVEN(client) client + " :No nickname given"
 # define ERR_ERRONEUSNICKNAME(client, nick) client + " " + nick + " :Erroneus nickname"

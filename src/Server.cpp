@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/08 22:36:37 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/09 03:35:48 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ Server::Server(std::string pass, int port, int serial )
         throw "can't accept this password";
     this->password = pass;
     this->port = port;
-    this->serverName = "Ircsrvr" + serial_str;
+    this->serverName = ":Ircsrvr" + serial_str + ".local";
     this->createSocket();
     this->makeNonBlockSocket();
     this->makePortReusable();
@@ -284,7 +284,7 @@ void    Server::execReq()
         return ;
     while (this->Mqueue.size())
     {
-        Commands command;
+        Commands command(this);
         command.execute( get_client_adress(this->Mqueue.front().first) ,this->Mqueue.front().second);
         this->Mqueue.pop();
     }

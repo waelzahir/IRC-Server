@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/08 23:20:51 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/09 03:33:05 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ class Server
         int         port;
         std::vector<Channel *> channels;
         std::vector<Client  *> clients;
+        std::string password;
     private:
         int listensocket;
-        std::string password;
         std::vector<struct pollfd> fds;
         std::map<int , Client *>   fdmapping;
         std::map<int , std::string> messagemap; /*this map have full and the fragmented request than need to be full to be pushed to the message requests*/

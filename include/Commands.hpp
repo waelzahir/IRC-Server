@@ -12,8 +12,7 @@
 # include "Client.hpp"
 # include <sys/socket.h>
 # include "macros.h"
-# include "Server.hpp"
-
+class Server;
 class Commands
 {
 	private:
