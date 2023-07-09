@@ -16,9 +16,9 @@
 # define ERR_ALREADYREGISTERED(server , client) server + " 462 " + client + " PASS"+ " :You may not reregister\r\n"
 # define ERR_PASSWDMISMATCH(server, client) server + " 464 " + client + " :Password incorrect\r\n"
 
-# define ERR_NONICKNAMEGIVEN(client) client + " :No nickname given"
-# define ERR_ERRONEUSNICKNAME(client, nick) client + " " + nick + " :Erroneus nickname"
-# define ERR_NICKNAMEINUSE(client, nick) client + " " + nick + " :Nickname is already in use"
-# define ERR_NICKCOLLISION(client, nick, user, host) client + " " + nick + " ::Nickname collision KILL from " + user + "@" + host
+# define ERR_NONICKNAMEGIVEN(server ,client) server + " 431 " + client + " :No nickname given\r\n"
+# define ERR_ERRONEUSNICKNAME(server, client, nick) server+ " 432 " + client + " " + nick + " :Erroneus nickname\r\n"
+# define ERR_NICKNAMEINUSE(server, client, nick) server + " 433 " client + " " + nick + " :Nickname is already in use\r\n"
+# define ERR_NICKCOLLISION(client, nick, user, host) client + " " + nick + " ::Nickname collision KILL from " + user + "@" + host // wont be used
 
 #endif

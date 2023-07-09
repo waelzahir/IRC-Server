@@ -43,6 +43,11 @@ bool User::operator == (User &_o)
 
 /*** --------------------------------- METHODS ----------------------------------*/
 
+void	User::activateAuth()
+{
+	if (pass_auth.size() && username.size() && nickname.size())
+		this->connected = 1;
+}
 
 /*** --------------------------------- ACCESSOR ---------------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 03:33:05 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/09 04:11:12 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ class Server
         void    addClient(Client *client);
         void    removeClient(Client *client);
         void    sendMessage(Message message); /* this method broadcast message to every client*/
-        
+        bool    checkNick(std::string &nick, Client *client);
         std::string serverName; /*wht not server name ??*/
         int         port;
         std::vector<Channel *> channels;
         std::vector<Client  *> clients;
         std::string password;
+        std::map<std::string, Client *> nickmak;
     private:
         int listensocket;
         std::vector<struct pollfd> fds;

@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 03:49:12 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/09 04:16:33 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,4 +288,24 @@ void    Server::execReq()
         command.execute( get_client_adress(this->Mqueue.front().first) ,this->Mqueue.front().second);
         this->Mqueue.pop();
     }
+
+}
+
+bool    Server::checkNick(std::string &nick, Client *client)
+{
+    Client *cl;
+    try
+    {
+        cl = nickmak.at(nick);
+    }
+    catch (...)
+    {
+        return false;
+    }
+    if (cl == client)
+    {
+        nickmak.erase(nick);
+        return false;
+    }
+    return true;
 }
