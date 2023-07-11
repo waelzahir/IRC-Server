@@ -14,6 +14,7 @@
 # include "macros.h"
 class Server;
 # include "Server.hpp"
+class Server;
 class Commands
 {
 private:

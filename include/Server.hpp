@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 01:37:31 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/11 17:57:38 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,16 @@ class Server
         void    addClient(Client *client);
         void    removeClient(Client *client);
         void    sendMessage(Message message); /* this method broadcast message to every client*/
-        
+        bool    checkNick(std::string &nick, Client *client);
         std::string serverName; /*wht not server name ??*/
         int         port;
         std::vector<Channel *> channels;
-        std::vector<Client  *> clients;
+        std::string password;
+        std::map<std::string, Client *> nickmak;
     private:
         int listensocket;
-        std::string password;
         std::vector<struct pollfd> fds;
-        std::map<int , Client *>   fdmapping;
-        std::map<int , std::string> messagemap; /*this map have full and the fragmented request than need to be full to be pushed to the message requests*/
+        std::map<int , Client *>   clients;
         std::queue<std::pair<int, std::string> > Mqueue; /* this queue contains the only full request containing (\r\n)*/
 
         void    createSocket();

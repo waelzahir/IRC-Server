@@ -1,5 +1,5 @@
 #include "Commands.hpp"
-
+#include "Server.hpp"
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
 Commands::Commands() 
 {
@@ -37,7 +37,13 @@ void	Commands::execute(Client *client, std::string Command)
 		return ;
 	void  (Commands::*ptr)(Client*, std::stringstream&) = this->getCommand(name);
 	if (ptr == NULL)
+	{
+		std::string message;
+		(client->_client_user.connected) ? message = ERR_UNKNOWNCOMMAND(this->server->serverName, client->_client_user.nickname, name):
+		message = ERR_NOTREGISTERED(this->server->serverName, name);
+		send(client->fd, message.c_str(), message.length(), 0);
 		return ;
+	}
 	(this->*ptr)(client, strm);
 }
 void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::stringstream&)
