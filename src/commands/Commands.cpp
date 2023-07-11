@@ -39,8 +39,8 @@ void	Commands::execute(Client *client, std::string Command)
 	if (ptr == NULL)
 	{
 		std::string message;
-		(client->_client_user.connected) ? message = ERR_UNKNOWNCOMMAND(this->server->serverName, client->_client_user.nickname, name):
-		message = ERR_NOTREGISTERED(this->server->serverName, name);
+		(client->_client_user.connected) ? message = ERR_UNKNOWNCOMMAND(this->_server->serverName, client->_client_user.nickname, name):
+		message = ERR_NOTREGISTERED(this->_server->serverName, name);
 		send(client->fd, message.c_str(), message.length(), 0);
 		return ;
 	}

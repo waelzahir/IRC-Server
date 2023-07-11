@@ -8,13 +8,13 @@ void	Commands::user(Client *client, std::stringstream &stream)
 	std::string message;
 	if (client->_client_user.username.size())
 	{
-		message = ERR_ALREADYREGISTERED(this->server->serverName, client->_client_user.nickname, "USER");
+		message = ERR_ALREADYREGISTERED(this->_server->serverName, client->_client_user.nickname, std::string("USER"));
 		send(client->fd, message.c_str(), message.length() , 0);
 		return ;
 	}
 	if (!parser.getStatus())
 	{
-		message = ERR_NEEDMOREPARAMS(this->server->serverName, "*", "USER");
+		message = ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "USER");
 		send(client->fd, message.c_str(), message.length() , 0);
 		return ;
 	}

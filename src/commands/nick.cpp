@@ -21,22 +21,22 @@ void	Commands::nick(Client *client, std::stringstream &stream)
 	std::string message;
 	if (!token.length())
 	{
-		message = ERR_NONICKNAMEGIVEN(this->server->serverName, "*");
+		message = ERR_NONICKNAMEGIVEN(this->_server->serverName, "*");
 		send(client->fd, message.c_str(), message.length() , 0);
 			return ;
 	}
 	if (checkNickValidity(token))
 	{
-		message = ERR_ERRONEUSNICKNAME(this->server->serverName, "*", token);
+		message = ERR_ERRONEUSNICKNAME(this->_server->serverName, "*", token);
 		send(client->fd, message.c_str(), message.length() , 0);
 		return ;
 	}
-	if (this->server->checkNick(token, client))
+	if (this->_server->checkNick(token, client))
 	{
-		message = ERR_NICKNAMEINUSE(this->server->serverName, "*", token);
+		message = ERR_NICKNAMEINUSE(this->_server->serverName, "*", token);
 		send(client->fd, message.c_str(), message.length() , 0);
 		return ;
 	}
-	this->server->nickmak.insert(std::make_pair(token, client));
+	this->_server->nickmak.insert(std::make_pair(token, client));
 	client->_client_user.nickname = token;
 }

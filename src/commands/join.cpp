@@ -8,6 +8,6 @@ void	Commands::join(Client *client, std::stringstream &_stream)
 	_stream >> param; 
 
 	std::cout << param << std::endl;
-	send(client->fd, ":Taha JOIN #test\n", sizeof(":Taha JOIN #test"), 0);
+	send(client->fd, ":Taha JOIN #test\r\n", sizeof(":Taha JOIN #test\r\n"), 0);
 	std::cout << "--------join end-------" << std::endl;
 }

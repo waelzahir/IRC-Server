@@ -14,12 +14,13 @@
 # include "macros.h"
 class Server;
 # include "Server.hpp"
-class Server;
+// class Server;
+
 class Commands
 {
 private:
-	Server *_server;
 public:
+	Server *_server;
 	Commands();
 	Commands(Server *name);
 	Commands(Commands const &);
