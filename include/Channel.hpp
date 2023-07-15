@@ -23,7 +23,7 @@ public:
 	Channel(Channel const &);
 	~Channel();
 
-	void add_user(User &);
+	int add_user(User &, std::string&);
 	void remove_user(User &);
 
 	void set_mode(int flag);

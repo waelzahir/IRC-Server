@@ -46,12 +46,20 @@ bool Channel::operator == (Channel &_o)
 
 /*** --------------------------------- METHODS ----------------------------------*/
 
-void Channel::add_user(User &user)
+int Channel::add_user(User &user, std::string &key)
 {
 	std::vector<User>::iterator it;
 	it = find(_users.begin(), _users.end(), user);
 	if (it == _users.end())
-		_users.push_back(user);
+	{
+		if (_key == key)
+			_users.push_back(user);
+		else 
+			return 1;
+	}
+	else
+		return 2;
+	return 0;
 }
 void Channel::remove_user(User &user)
 {

@@ -48,7 +48,14 @@ void	Commands::join(Client *client, std::stringstream &_stream)
 		new_channel._owner = &client->_client_user;
 		if (_server->createChannel(new_channel))
 		{
-			(*find(_server->channels.begin(),_server->channels.end(), new_channel)).add_user((client->_client_user));
+			int status = (*find(_server->channels.begin(),_server->channels.end(), new_channel))\
+				.add_user(client->_client_user, channells.front().second);
+			if (status == 1)
+				; // key invalis
+			else if (status == 2)
+				;// user already in channel
+			// sucsess
+
 		}
 		channells.pop();
 	}

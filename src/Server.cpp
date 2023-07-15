@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/15 07:55:26 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/15 08:16:40 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ int    Server::createChannel(Channel& channel)
 }
 
 
-
 int    Server::removeChannel(Channel &channel)
 {
     std::vector<Channel>::iterator it;
 	it = find(channels.begin(), channels.end(), channel);
 	if (it != channels.end())
-		channels.erase(it);
+		return channels.erase(it), 0;
+    return 1;
 }
 
 
