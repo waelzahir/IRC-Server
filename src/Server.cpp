@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 23:06:44 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/15 07:55:26 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@ Server::~Server()
         close((this->clients.begin())->second->fd);
         delete ((this->clients.begin()->second));
         this->clients.erase(this->clients.begin());
-    }
-    while (channels.size())
-    {
-        delete channels[0];
-        channels.erase(channels.begin());
     }
 }
 
@@ -76,26 +71,27 @@ void    Server::disconect()
 
 
 
-void    Server::createChannel(Channel *channel)
+int    Server::createChannel(Channel& channel)
 {
+    std::vector<Channel>::iterator it;
+	it = find(channels.begin(), channels.end(), channel);
+	if (it != channels.end())
+    {
+        std::cerr << "create channel: channel exist" << std::endl; 
+        return 1;
+    }
     this->channels.push_back(channel);
+    return 0;
 }
 
 
 
-void    Server::removeChannel(Channel *channel)
+int    Server::removeChannel(Channel &channel)
 {
-   std::vector<Channel *>::iterator it = this->channels.begin();
-   while (it != this->channels.end())
-   {
-        if (*it == channel)
-            break;
-        it++;
-   }
-   if (it == this->channels.end())
-        return ;
-    delete channel;
-    this->channels.erase(it);
+    std::vector<Channel>::iterator it;
+	it = find(channels.begin(), channels.end(), channel);
+	if (it != channels.end())
+		channels.erase(it);
 }
 
 

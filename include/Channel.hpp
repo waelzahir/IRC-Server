@@ -13,8 +13,10 @@ class Channel
 
 public:
 	std::string				_name;
+	std::string				_key;
 	std::vector<User>		_users;
 	char					mode;
+	User					*_owner;
 
 	Channel();
 	Channel(std::string);
@@ -29,6 +31,8 @@ public:
 	bool get_mode_status(int flag);
 
 	Channel&	operator=(Channel const &);
+	bool operator == (const Channel &);
+	bool operator == ( Channel &);
 };
 
 #endif /* * SPAN_H */

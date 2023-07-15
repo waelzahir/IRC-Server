@@ -24,9 +24,25 @@ Channel::~Channel()
 /*** --------------------------------- OVERLOAD ---------------------------------*/
 Channel&   Channel::operator=(Channel const & other )
 {
-	(void)other;
+	this->_name  = other._name;
+	this->_key   = other._key;
+	this->_users = other._users;
+	this->_owner = other._owner;
 	return *this;
 }
+bool Channel::operator == (const Channel &_o)
+{
+	if (_o._name == this->_name)
+		return true;
+	return false;
+}
+bool Channel::operator == (Channel &_o)
+{
+	if (_o._name == this->_name)
+		return true;
+	return false;
+}
+
 
 /*** --------------------------------- METHODS ----------------------------------*/
 

@@ -32,7 +32,7 @@ void	Commands::execute(Client *client, std::string Command)
 {
 	std::stringstream strm(Command);
 	std::string name;
-	std::cout <<  strm.str() << std::endl;
+	// std::cout <<  strm.str() << std::endl;
 	if (!std::getline(strm, name, ' '))
 		return ;
 	void  (Commands::*ptr)(Client*, std::stringstream&) = this->getCommand(name);
