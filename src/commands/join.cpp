@@ -19,9 +19,9 @@ static std::string extract_token(std::stringstream &src)
 	return temp;
 }
 
-std::queue<std::pair<std::string, std::string>> get_channels_key(std::stringstream &stream)
+std::queue<std::pair<std::string, std::string> > get_channels_key(std::stringstream &stream)
 {
-	std::queue<std::pair<std::string, std::string>> map_ch;
+	std::queue<std::pair<std::string, std::string> > map_ch;
 	std::stringstream channles;
 	std::stringstream keys;
 
@@ -44,7 +44,7 @@ void find_channel_add_user(Channel &channel, std::vector<Channel> &channels, Mes
 
 void Commands::join(Client *client, std::stringstream &_stream)
 {
-	std::queue<std::pair<std::string, std::string>> channells;
+	std::queue<std::pair<std::string, std::string> > channells;
 	channells = get_channels_key(_stream);
 	Message message(*client,"JOIN",client->_client_user.nickname);
 
