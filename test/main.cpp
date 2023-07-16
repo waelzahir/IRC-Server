@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 05:13:05 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/15 04:00:50 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:37:56 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ std::queue<std::pair <std::string, std::string> > get_channels_key(std::stringst
     
 	return map_ch;
 }
-
+# include <stdio.h>
 
 int main(int argc, char const *argv[])
 {
+    std::vector<int> l{1,2,3};
+    std::vector<int> b{1,2,2,3};
 
-
-    std::string user = "#first,#two  key,key2";
-    std::stringstream st;
-
-    st << user;
-    std::queue<std::pair <std::string, std::string> > map_ch;
-    // use std::string; 
+    
+    printf("%p\n", l.end());
+    printf("%p\n", l.end());
+    printf("%p\n", b.end());
+// use std::string; 
     // map_ch = get_channels_key(st);
     // std::cout << "size : "<<  map_ch.size() << std::endl;
     

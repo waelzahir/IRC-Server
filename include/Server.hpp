@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/15 07:37:10 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:47:18 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ class Server
         std::string password;
         std::map<std::string, Client *> nickmak;
     private:
-        int listensocket;
+        int listensocket    ;
         std::vector<struct pollfd> fds;
         std::map<int , Client *>   clients;
         std::queue<std::pair<int, std::string> > Mqueue; /* this queue contains the only full request containing (\r\n)*/

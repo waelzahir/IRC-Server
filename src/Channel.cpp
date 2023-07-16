@@ -5,7 +5,7 @@ Channel::Channel()
 {
 	std::cout << "Channel Constructor called" << std::endl;
 }
-Channel::Channel(std::string name) : _name(name) , mode(0)
+Channel::Channel(std::string name) : _name(name) , mode(0), _key("")
 {
 	
 }
