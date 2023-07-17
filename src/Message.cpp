@@ -5,7 +5,7 @@
 
 
 
-Message::Message(Client	&sender, const char *command) :_sender(sender), _source(""), _tag(""), _command(command), _param(""), crlf("\r\n")
+Message::Message(Client	&sender, const char *command) :_sender(sender), _source(""), _tag(""), _command(command), _param("")
 {
 }
 Message::Message(Client	&sender, const char *command, std::string &source) :_sender(sender), _source(source), _tag(""), _command(command), _param("")
