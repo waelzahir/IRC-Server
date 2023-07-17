@@ -16,6 +16,10 @@
 # define RPL_MYINFO(server , nick,modes) server + " 004 " + nick + " ircserv 1 " + modes + "\r\n"
 # define RPL_ISUPPORT(server, nick) server + " 005 " + nick + " :are supported by this server\r\n"
 
+#define ERR_NOSUCHNICK(server, nick, dest) server + " 401 " + nick + " " + dest + " : No Such nickname\r\n"
+# define ERR_NORECIPIENT(server, nick, command) server +  " 411 " + nick + " :No recipient given(" + command + ")\r\n"
+# define ERR_NOTEXTTOSEND(server, nick) server +  " 412 " + nick + " :No text to send\r\n"
+
 # define ERR_UNKNOWNCOMMAND(server, client, cmd) server + " 421 " + client +  " " + cmd + " :Unknown command\r\n"
 # define ERR_NOTREGISTERED(server, cmd) server + " 451 " + cmd + " :You have not registered\r\n"
 # define ERR_NEEDMOREPARAMS(server ,client, command) server + " 461 "+  client + " " + command + " :Not enough parameters\r\n"

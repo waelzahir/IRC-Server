@@ -33,6 +33,7 @@ public:
 	void	user(Client *client, std::stringstream &stream);
 	void	mode(Client *client, std::stringstream &stream);
 	void	join(Client *client, std::stringstream &stream);
+	void	privmsg(Client *client, std::stringstream &stream);
 	void	welcome(Client *client, std::stringstream &stream);
 	
 

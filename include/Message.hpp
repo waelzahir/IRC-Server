@@ -18,7 +18,7 @@ public:
 	std::string _command;
 	std::string _param;
 	std::string _final_message;
-	const std::string crlf = "\r\n";
+	const std::string crlf; 
 
 
 	Message();

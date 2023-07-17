@@ -64,6 +64,8 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["NICK"] = &Commands::nick;
 	commands["MODE"] = &Commands::mode;
 	commands["JOIN"] = &Commands::join;
+	commands["PRIVMSG"] = &Commands::privmsg;
+
 	try
 	{
 		return commands.at(funcname);

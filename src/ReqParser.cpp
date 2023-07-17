@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 18:15:10 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/09 23:02:33 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/17 17:50:59 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int ReqParser::getStatus()
 {
     return (tokens.size());
 }
-void    ReqParser::ListedParse(std::pair<int, std::string> to)
+int    ReqParser::ListedParse(std::pair<int, std::string> to)
 {
     int i = 0;
     std::string command = to.second;
@@ -53,8 +53,8 @@ void    ReqParser::ListedParse(std::pair<int, std::string> to)
     {
         this->tokens.insert(this->tokens.begin() + i, std::make_pair(2, token));
         i++;
-
     }
+    return i;
 
 }
 std::pair<int, std::string> ReqParser::getToken()
