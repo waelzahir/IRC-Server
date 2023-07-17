@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/16 08:54:13 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:12:56 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,15 +288,26 @@ bool    Server::checkNick(std::string &nick, Client *client)
     try
     {
         cl = nickmak.at(nick);
+        if (cl == client)
+        {
+            nickmak.erase(nick);
+            std::string message;
+            message = ":" +  client->_client_user.nickname + "!~" + client->_client_user.username + "@"+ client->host + " NICK :" + nick + "\r\n"; 
+            send(client->fd, message.c_str(), message.length(), 0);
+            return false;
+        }
     }
     catch (...)
     {
+        if (client->_client_user.nickname.length())
+        {
+            std::string message;
+            message = ":" +  client->_client_user.nickname + "!~" + client->_client_user.username + "@"+ client->host + " NICK :" + nick + "\r\n"; 
+            send(client->fd, message.c_str(), message.length(), 0);
+        }
         return false;
     }
-    if (cl == client)
-    {
-        nickmak.erase(nick);
-        return false;
-    }
+   
     return true;
 }
+

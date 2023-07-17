@@ -45,6 +45,12 @@ void	Commands::execute(Client *client, std::string Command)
 		return ;
 	}
 	(this->*ptr)(client, strm);
+	if (client->_client_user.connected && client->_client_user.welcomed)
+	{
+		client->_client_user.welcomed = 0;
+		this->welcome(client, strm);
+	}
+
 }
 void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::stringstream&)
 {

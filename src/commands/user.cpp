@@ -21,5 +21,4 @@ void	Commands::user(Client *client, std::stringstream &stream)
 	std::pair<int, std::string> tpair = parser.getToken();
 	client->_client_user.username = tpair.second;
 	client->_client_user.activateAuth();
-
 }
