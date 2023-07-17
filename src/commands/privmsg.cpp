@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/17 18:53:53 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/17 23:10:14 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,71 +15,55 @@
 #include "Server.hpp"
 #include "ReqParser.hpp"
 
+static void sendHelper(std::string message, int destination)
+{
+    send(destination, message.c_str(), message.length(), 0);
+}
+static void sendHelper(std::string message, Channel &chanel)
+{
+    
+}
 void	Commands::privmsg(Client *client, std::stringstream &stream)
 {
     ReqParser	parser(stream);
     std::string message;
-    if (!parser.getStatus())
+    
+    if (parser.getStatus() < 2)
 	{
-        message = ERR_NORECIPIENT(this->_server->serverName, client->_client_user.nickname, "PRIVMSG");
-		send(client->fd, message.c_str(), message.length() , 0);
+        (parser.getStatus() == 0) ? sendHelper(ERR_NORECIPIENT(this->_server->serverName, client->_client_user.nickname, "PRIVMSG"), client->fd) : sendHelper(ERR_NOTEXTTOSEND(this->_server->serverName, client->_client_user.nickname), client->fd);
 		return ;
 	}
-    std::pair<int, std::string> destt = parser.getToken();
-    if (!parser.getStatus())
-	{
-        message = ERR_NOTEXTTOSEND(this->_server->serverName, client->_client_user.nickname);
-		send(client->fd, message.c_str(), message.length() , 0);
-		return ;
-	}
-    std::pair<int, std::string> messaget = parser.getToken();
-    int dest = 1;
-    std::cout << destt.second << " " << messaget.second <<std::endl;
-    if (destt.first == 1)
-    {
-        dest = parser.ListedParse(destt);
-    }
-    if (dest > 1)
-    {
-        while (dest)
+    std::pair<int, std::string> where = parser.getToken();
+    std::pair<int, std::string> what = parser.getToken();
+    if (where.first != 1)
+        try
         {
-            destt = parser.getToken();
-            if (isalpha(destt.second[0]))
-            {
-                try
-                {
-                    Client *cl = this->_server->nickmak.at(destt.second);
-                    message = ":" + cl->_client_user.nickname + "!~"+  cl->_client_user.username + "@" + cl->host + " PRIVMSG " +  destt.second + " :" + messaget.second + "\r\n";
-                    send(cl->fd, message.c_str(), message.length(), 0);
-
-                }
-                catch (...)
-                {
-                    message = ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, destt.second);
-                    send(client->fd, message.c_str(), message.length(), 0);
-                }
-            }
-            dest--;
+            Client *cli = this->_server->nickmak.at(where.second);
+            sendHelper(std::string(":") + cli->_client_user.nickname + "!~" + cli->_client_user.nickname + "@" + cli->host + " PRIVMSG " + where.second + " :" + what.second + "\r\n", cli->fd);
+            return ;
         }
-    }
-    else
+        catch (...)
+        {
+            sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+            return ;
+        }
+    int loop = parser.ListedParse(where);
+    while (loop)
     {
-        if (isalpha(destt.second[0]))
-            {
-                try
-                {
-                    Client *cl = this->_server->nickmak.at(destt.second);
-                    message = ":" + cl->_client_user.nickname + "!~"+  cl->_client_user.username + "@" + cl->host + " PRIVMSG " +  destt.second + " :" + messaget.second + "\r\n";
-                    send(cl->fd, message.c_str(), message.length(), 0);
-
-                }
-                catch (...)
-                {
-                    message = ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, destt.second);
-                    send(client->fd, message.c_str(), message.length(), 0);
-                }
-            }
-        
+        where = parser.getToken();
+        try
+        {
+            Client *cli = this->_server->nickmak.at(where.second);
+            sendHelper(std::string(":") + cli->_client_user.nickname + "!~" + cli->_client_user.nickname + "@" + cli->host + " PRIVMSG " + where.second + " :" + what.second + "\r\n", cli->fd);
+            return ;
+        }
+        catch (...)
+        {
+            sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+            return ;
+        }
+        loop--;
     }
-
 }
+
+// sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, destt.second),client->fd);
