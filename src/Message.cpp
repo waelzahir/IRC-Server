@@ -81,7 +81,7 @@ void Message::set_message()
 		_final_message = _final_message + " " + _param;	
 	if (_trailing != "")
 		_final_message = _final_message + " :" + _trailing;
-	_final_message =  _final_message + crlf;
+	_final_message =  _final_message + "\r\n";
 }
 void Message::set_message_error(const std::string &error)
 {
