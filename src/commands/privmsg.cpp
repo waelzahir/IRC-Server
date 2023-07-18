@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/18 03:12:41 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:41:24 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void sendHelper(std::string message, Channel &chanel)
 void	Commands::privmsg(Client *client, std::stringstream &stream)
 {
     ReqParser	parser(stream);
-    Message message(*client, "PRIVMSG", client->_client_user.nickname);
     
     if (parser.getStatus() < 2)
 	{
@@ -49,6 +48,7 @@ void	Commands::privmsg(Client *client, std::stringstream &stream)
             }
             else
             {
+                Message message(*client, "PRIVMSG", client->_client_user.nickname);
                 message.set_param(where.second);
                 message.set_trailing(what.second);
                 _server->sendMessage(message, *this->_server->nickmak.at(where.second));
@@ -63,6 +63,7 @@ void	Commands::privmsg(Client *client, std::stringstream &stream)
     int loop = parser.ListedParse(where);
     while (loop)
     {
+        std::cout << loop << std::endl;
         where = parser.getToken();
         try
         {
@@ -72,10 +73,11 @@ void	Commands::privmsg(Client *client, std::stringstream &stream)
             }
             else
             {
-                Client *cli = this->_server->nickmak.at(where.second);
-                sendHelper(std::string(":") + cli->_client_user.nickname + "!~" + cli->_client_user.nickname + "@" + cli->host + " PRIVMSG " + where.second + " :" + what.second + "\r\n", cli->fd);
+                Message message(*client, "PRIVMSG", client->_client_user.nickname);
+                message.set_param(where.second);
+                message.set_trailing(what.second);
+                _server->sendMessage(message, *this->_server->nickmak.at(where.second));
             }
-            return ;
         }
         catch (...)
         {
