@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/15 23:47:18 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/18 02:53:09 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ class Server
         void    addClient(Client *client);
         void    removeClient(Client *client);
         void    sendMessage(Message message); /* this method broadcast message to every client*/
+        void    sendMessage(Message message, const Client &cl); /*; /* this method broadcast message to every client*/
         bool    checkNick(std::string &nick, Client *client);
         std::string serverName; /*wht not server name ??*/
         int         port;

@@ -28,6 +28,10 @@ Commands&   Commands::operator=(Commands const & other )
 }
 
 /*** --------------------------------- METHODS ----------------------------------*/
+static bool authMethods(std::string name)
+{
+	return (name == "PASS" || name == "NICK" || name == "USER");
+}
 void	Commands::execute(Client *client, std::string Command)
 {
 	std::stringstream strm(Command);
@@ -36,7 +40,7 @@ void	Commands::execute(Client *client, std::string Command)
 	if (!std::getline(strm, name, ' '))
 		return ;
 	void  (Commands::*ptr)(Client*, std::stringstream&) = this->getCommand(name);
-	if (ptr == NULL)
+	if ((!authMethods(name) && !client->_client_user.connected ) || ptr == NULL)
 	{
 		std::string message;
 		(client->_client_user.connected) ? message = ERR_UNKNOWNCOMMAND(this->_server->serverName, client->_client_user.nickname, name):
@@ -45,6 +49,12 @@ void	Commands::execute(Client *client, std::string Command)
 		return ;
 	}
 	(this->*ptr)(client, strm);
+	if (client->_client_user.connected && client->_client_user.welcomed)
+	{
+		client->_client_user.welcomed = 0;
+		this->welcome(client, strm);
+	}
+
 }
 void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::stringstream&)
 {
@@ -58,6 +68,8 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["NICK"] = &Commands::nick;
 	commands["MODE"] = &Commands::mode;
 	commands["JOIN"] = &Commands::join;
+	commands["PRIVMSG"] = &Commands::privmsg;
+
 	try
 	{
 		return commands.at(funcname);

@@ -18,7 +18,8 @@ public:
 	std::string _command;
 	std::string _param;
 	std::string _final_message;
-	const std::string crlf = "\r\n";
+	std::string _trailing;
+	const std::string crlf = "\r\n"; 
 
 
 	Message();
@@ -30,6 +31,7 @@ public:
 	void set_param(std::string &param);
 	void set_source(std::string &source);
 	void set_command(std::string &command);
+	void set_trailing(std::string &trailing);
 	void set_tag(std::string &tag);
 	void set_message();
 	void set_message_error(const std::string &error);

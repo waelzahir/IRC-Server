@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/16 08:54:13 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:08:51 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,12 @@ void    Server::sendMessage(Message message) /* this method broadcast message to
 {
     message.set_message();
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
+}
+
+void    Server::sendMessage(Message message, const Client &cl) /* this method broadcast message to every client*/
+{
+    message.set_message();
+    send(cl.fd, message._final_message.c_str(), message.size(),0);
 }
 
 
@@ -288,15 +294,26 @@ bool    Server::checkNick(std::string &nick, Client *client)
     try
     {
         cl = nickmak.at(nick);
+        if (cl == client)
+        {
+            nickmak.erase(nick);
+            std::string message;
+            message = ":" +  client->_client_user.nickname + "!~" + client->_client_user.username + "@"+ client->host + " NICK :" + nick + "\r\n"; 
+            send(client->fd, message.c_str(), message.length(), 0);
+            return false;
+        }
     }
     catch (...)
     {
+        if (client->_client_user.nickname.length())
+        {
+            std::string message;
+            message = ":" +  client->_client_user.nickname + "!~" + client->_client_user.username + "@"+ client->host + " NICK :" + nick + "\r\n"; 
+            send(client->fd, message.c_str(), message.length(), 0);
+        }
         return false;
     }
-    if (cl == client)
-    {
-        nickmak.erase(nick);
-        return false;
-    }
+   
     return true;
 }
+

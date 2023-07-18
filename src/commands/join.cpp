@@ -47,28 +47,28 @@ void Commands::join(Client *client, std::stringstream &_stream)
 	std::queue<std::pair<std::string, std::string>> channells;
 	channells = get_channels_key(_stream);
 	Message message(*client,"JOIN",client->_client_user.nickname);
-	// if (!channells.size())
-	// {
-		message.set_message_error(_server->serverName + " 461 " + ERR_NEEDMOREPARAMS(client->_client_user.nickname, "JOIN"));
+	if (!channells.size())
+	{
+		// message.set_message_error(ERR_NEEDMOREPARAMS(client->_client_user.nickname, "JOIN"));
 		_server->sendMessage(message);
-	// }
+	}
 
-	// while (channells.size())
-	// {
-	// 	Channel new_channel(channells.front().first);
-	// 	new_channel._owner = &client->_client_user;
-	// 	new_channel._key = channells.front().second;
-	// 	if (_server->createChannel(new_channel))
-	// 	{
-	// 		// channel exist
-	// 	}
-	// 	// channel not exist
-	// 	find_channel_add_user(new_channel, _server->channels, message);
-	// 	message.set_param(new_channel._name);
-	// 	_server->sendMessage(message);
-	// 	channells.pop();
-	// 	message.clear_final();
-	// }
+	while (channells.size())
+	{
+		Channel new_channel(channells.front().first);
+		new_channel._owner = &client->_client_user;
+		new_channel._key = channells.front().second;
+		if (_server->createChannel(new_channel))
+		{
+			// channel exist
+		}
+		// channel not exist
+		find_channel_add_user(new_channel, _server->channels, message);
+		message.set_param(new_channel._name);
+		_server->sendMessage(message);
+		channells.pop();
+		message.clear_final();
+	}
 	// if (!message.length())
 	// {
 	// 	std::cout << "--------join ende-------" << std::endl;

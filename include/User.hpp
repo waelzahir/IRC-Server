@@ -14,6 +14,7 @@ public:
 	std::string nickname;
 	std::string pass_auth;
 	int 		connected;
+	int 		welcomed;
 	void	activateAuth();
 	User();
 	User(std::string, std::string);

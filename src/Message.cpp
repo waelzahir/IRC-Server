@@ -5,10 +5,10 @@
 
 
 
-Message::Message(Client	&sender, const char *command) :_sender(sender), _source(""), _tag(""), _command(command), _param("")
+Message::Message(Client	&sender, const char *command) :_sender(sender), _source(""), _tag(""), _command(command), _param(""), _trailing("")
 {
 }
-Message::Message(Client	&sender, const char *command, std::string &source) :_sender(sender), _source(source), _tag(""), _command(command), _param("")
+Message::Message(Client	&sender, const char *command, std::string &source) :_sender(sender), _source(source), _tag(""), _command(command), _param(""),  _trailing("")
 {
 }
 
@@ -32,6 +32,7 @@ Message &Message::operator=(Message const &other)
 	_command = other._command;
 	_param = other._param;
 	_sender = other._sender;
+	_trailing = other._trailing;
 	return *this;
 }
 
@@ -56,6 +57,10 @@ void Message::set_command(std::string &command)
 {
 	_command = command;
 }
+void Message::set_trailing(std::string &trailing)
+{
+	_trailing = trailing;
+}
 void Message::set_tag(std::string &tag)
 {
 	_tag = tag;
@@ -66,7 +71,12 @@ void Message::set_message()
 		_final_message = "@" + _tag + " ";
 	if (_source != "")
 		_final_message = _final_message + ":" + _source + " ";
-	_final_message = _final_message  + _command + " " + _param + crlf;
+	_final_message = _final_message  + _command;
+	if (_param != "")
+		_final_message = _final_message + " " + _param;	
+	if (_trailing != "")
+		_final_message = _final_message + " :" + _trailing;
+	_final_message =  _final_message + crlf;
 }
 void Message::set_message_error(const std::string &error)
 {
