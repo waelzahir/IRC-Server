@@ -19,7 +19,7 @@ public:
 	std::string _param;
 	std::string _final_message;
 	std::string _trailing;
-	const std::string crlf = "\r\n"; 
+	std::string crlf; 
 
 
 	Message();
