@@ -68,6 +68,10 @@ void Message::set_message()
 		_final_message = _final_message + ":" + _source + " ";
 	_final_message = _final_message  + _command + " " + _param + crlf;
 }
+void Message::set_message_error(const std::string &error)
+{
+	_final_message = error + "\r\n";
+}
 
 size_t Message::size()
 {

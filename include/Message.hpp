@@ -32,6 +32,7 @@ public:
 	void set_command(std::string &command);
 	void set_tag(std::string &tag);
 	void set_message();
+	void set_message_error(const std::string &error);
 	void clear_final();
 	size_t size();
 

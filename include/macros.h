@@ -21,4 +21,6 @@
 # define ERR_NICKNAMEINUSE(server, client, nick) server + " 433 " client + " " + nick + " :Nickname is already in use\r\n"
 # define ERR_NICKCOLLISION(client, nick, user, host) client + " " + nick + " ::Nickname collision KILL from " + user + "@" + host // wont be used
 
+
+
 #endif
