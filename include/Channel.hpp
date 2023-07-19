@@ -13,9 +13,9 @@ class Channel
 
 public:
 	std::string				_name;
+	char					mode;
 	std::string				_key;
 	std::vector<User>		_users;
-	char					mode;
 	User					*_owner;
 
 	Channel();
@@ -25,6 +25,7 @@ public:
 
 	int add_user(User &, std::string&);
 	void remove_user(User &);
+	void remove_user(const User &);
 
 	void set_mode(int flag);
 	void unset_mode(int flag);

@@ -32,10 +32,10 @@ std::queue<std::pair<std::string, std::string> > get_channels_key(std::stringstr
 	return map_ch;
 }
 
-void find_channel_add_user(Channel &channel, std::vector<Channel> &channels, Message& message)
+void find_channel_add_user(Channel &channel, std::map<std::string, Channel> &channels, Message& message)
 {
-	int status = (*find(channels.begin(), channels.end(), channel))
-					 .add_user(*channel._owner, channel._key);
+	int status = (*channels.find(channel._name))
+					 .second.add_user(*channel._owner, channel._key);
 	if (status == 1) // key invalid
 		;
 	else if (status == 2) // user already in channel

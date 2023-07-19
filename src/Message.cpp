@@ -38,6 +38,7 @@ Message &Message::operator=(Message const &other)
 	_param = other._param;
 	_sender = other._sender;
 	_trailing = other._trailing;
+	crlf = other.crlf;
 	return *this;
 }
 
@@ -93,9 +94,12 @@ size_t Message::size()
 	return _final_message.length();
 }
 
-void Message::clear_final()
+void Message::clear_final() 
 {
+	_tag = "";
+	_param = "";
 	_final_message = "";
+	_trailing = "";
 }
 /*** --------------------------------- ACCESSOR ---------------------------------*/
 

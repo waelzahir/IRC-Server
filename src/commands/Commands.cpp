@@ -24,6 +24,7 @@ Commands::~Commands()
 /*** --------------------------------- OVERLOAD ---------------------------------*/
 Commands&   Commands::operator=(Commands const & other )
 {
+	this->_server =  other._server;
 	return *this;
 }
 

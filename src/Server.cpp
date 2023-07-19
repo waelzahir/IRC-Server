@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/18 03:08:51 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:22:21 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ void    Server::disconect()
 
 int    Server::createChannel(Channel& channel)
 {
-    std::vector<Channel>::iterator it;
-	it = find(channels.begin(), channels.end(), channel);
+    std::map<std::string, Channel>::iterator it;
+	it = channels.find(channel._name);
 	if (it != channels.end())
     {
         std::cerr << "create channel: channel exist" << std::endl; 
         return 1;
     }
-    this->channels.push_back(channel);
+    this->channels.insert(std::make_pair(channel._name,  channel));
     return 0;
 }
 
@@ -88,8 +88,8 @@ int    Server::createChannel(Channel& channel)
 
 int    Server::removeChannel(Channel &channel)
 {
-    std::vector<Channel>::iterator it;
-	it = find(channels.begin(), channels.end(), channel);
+    std::map<std::string, Channel>::iterator it;
+	it = channels.find(channel._name);
 	if (it != channels.end())
 		return channels.erase(it), 0;
     return 1;
@@ -131,16 +131,66 @@ void    Server::removeClient(Client *client)
 
 
 
-void    Server::sendMessage(Message message) /* this method broadcast message to every client*/
+void    Server::sendMessage(Message message) /* this method broadcast message to  client*/
 {
     message.set_message();
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
 }
 
-void    Server::sendMessage(Message message, const Client &cl) /* this method broadcast message to every client*/
+void    Server::sendMessage(Message& message, const Client &cl) /* this method broadcast message to  client*/
 {
     message.set_message();
+    std::cout << cl._client_user.nickname << std::endl; 
+    std::cout << message._final_message << std::endl; 
     send(cl.fd, message._final_message.c_str(), message.size(),0);
+}
+void    Server::sendMessage_user(Message& message, std::string &nickname, const Channel& channel) /* this method broadcast message to  client*/
+{
+    try
+    {
+        Client *cl =  nickmak.at(nickname);
+        send((*cl).fd, message._final_message.c_str(), message.size(),0);
+    }
+    catch(const std::exception& e)
+    { 
+        
+        const_cast<Channel &>(channel).remove_user(User("", nickname));    
+        // check user not found in nickmak
+        
+    }
+}
+
+void    Server::sendMessageALL(Message& message) /* this method broadcast message to every client*/
+{
+    std::map<int, Client *>::iterator it;
+
+    message.set_message();
+    for (it  = clients.begin(); it != clients.end(); it++)
+    {
+        std::cout << (*it).second->_client_user.nickname << std::endl; 
+        std::cout << message._final_message << std::endl; 
+        send((*it).second->fd, message._final_message.c_str(), message.size(),0);
+    }
+}
+void    Server::sendMessageChannel(Message& message, std::string channel)
+{
+    std::vector<User>::iterator it;
+
+    try
+    {
+        std::vector<User>&users = channels.at(channel)._users;
+        /* code */
+        message.set_message();
+        for (it  = users.begin(); it != users.end(); it++)
+        {
+            if ((*it).nickname != message._sender._client_user.nickname)
+                sendMessage_user(message,(*it).nickname, channels.at(channel));
+        }
+    }
+    catch(const std::exception& e)
+    {
+        // channel not found
+    }
 }
 
 

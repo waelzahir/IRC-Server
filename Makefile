@@ -6,7 +6,7 @@
 #    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/07/15 08:00:42 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/07/18 09:05:50 by tel-mouh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ HEADERS = $(wildcard include/*.hpp) $(wildcard include/*.h)
 # ################COMMANDS###########################
 
 RM = rm -rf
-CC = g++ 
+CC = g++ -std=c++98 
 HEADERSFLAGS = -I include
 CFLAG = -g $(HEADERSFLAGS)
 #  -Wall -Wextra -Werror 

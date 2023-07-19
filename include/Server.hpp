@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/18 03:35:13 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/19 04:16:34 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ class Server
         void    addClient(Client *client);
         void    removeClient(Client *client);
         void    sendMessage(Message message); /* this method broadcast message to every client*/
-        void    sendMessage(Message message, const Client &cl); /* this method broadcast message to every client*/
+        void    sendMessage_user(Message &message, std::string &nickname,  const Channel& channel); /* this method broadcast message to every client*/
+        void    sendMessage(Message& message, const Client &cl); /* this method broadcast message to every client*/
+        void    sendMessageChannel(Message& message, std::string channel); /* this method broadcast message to every client*/
+        void    sendMessageALL(Message& message); /* this method broadcast message to every client*/
         bool    checkNick(std::string &nick, Client *client);
         std::string serverName; /*wht not server name ??*/
         int         port;
-        std::vector<Channel> channels;
+        std::map<std::string, Channel> channels;
         std::string password;
         std::map<std::string, Client *> nickmak;
     private:

@@ -68,6 +68,13 @@ void Channel::remove_user(User &user)
 	if (it != _users.end())
 		_users.erase(it);
 }
+void Channel::remove_user(const User &user)
+{
+	std::vector<User>::iterator it;
+	it = find(_users.begin(), _users.end(), user);
+	if (it != _users.end())
+		_users.erase(it);
+}
 
 void Channel::set_mode(int flag)
 {
