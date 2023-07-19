@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/19 04:47:38 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/19 07:36:04 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
             }
             else
             {
+                Message message(*client, "PRIVMSG", client->_client_user.nickname);
                 message.set_param(where.second);
                 message.set_trailing(what.second);
                 _server->sendMessage(message, *this->_server->nickmak.at(where.second));
@@ -66,6 +67,7 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
     int loop = parser.ListedParse(where);
     while (loop)
     {
+        std::cout << loop << std::endl;
         where = parser.getToken();
         try
         {
