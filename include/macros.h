@@ -31,6 +31,11 @@
 # define ERR_NICKNAMEINUSE(server, client, nick) server + " 433 " client + " " + nick + " :Nickname is already in use\r\n"
 # define ERR_NICKCOLLISION(client, nick, user, host) client + " " + nick + " ::Nickname collision KILL from " + user + "@" + host // wont be used
 
+// channel
+# define RPL_TOPIC(server, client, channel, topic)  server + " 332 " + client + " " + channel + " : " + topic 
+# define RPL_NAMREPLY(server, client, channel, nick)  server + " 353 " + client +  " @ "+ channel +" :" + nick
+# define RPL_ENDOFNAMES(server, client, channel)  server + " 366 " + client +  " "+ channel + " :End of /NAMES list"
+# define ERR_BADCHANNELKEY(server, client, channel)  server + " 475 " + client +  " "+ channel + " :Cannot join channel (+k)"
 
 
 #endif

@@ -32,14 +32,16 @@ std::queue<std::pair<std::string, std::string> > get_channels_key(std::stringstr
 	return map_ch;
 }
 
-void find_channel_add_user(Channel &channel, std::map<std::string, Channel> &channels, Message& message)
+Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> &channels, Message& message)
 {
-	int status = (*channels.find(channel._name))
-					 .second.add_user(*channel._owner, channel._key);
+
+	std::map<std::string, Channel>::iterator it = channels.find(channel._name); 
+	int status = (*it).second.add_user(*channel._owner, channel._key);
 	if (status == 1) // key invalid
-		;
+		throw std::string("key invalid");
 	else if (status == 2) // user already in channel
-		;
+		;// throw "user already in channel";
+	return (*it).second;
 }
 
 void Commands::join(Client *client, std::stringstream &_stream)
@@ -49,7 +51,7 @@ void Commands::join(Client *client, std::stringstream &_stream)
 	Message message(*client,"JOIN",client->_client_user.nickname);
 	if (!channells.size())
 	{
-		// message.set_message_error(ERR_NEEDMOREPARAMS(client->_client_user.nickname, "JOIN"));
+		message.set_message_error(ERR_NEEDMOREPARAMS(_server->serverName, client->_client_user.nickname, "JOIN"));
 		_server->sendMessage(message);
 	}
 
@@ -58,20 +60,38 @@ void Commands::join(Client *client, std::stringstream &_stream)
 		Channel new_channel(channells.front().first);
 		new_channel._owner = &client->_client_user;
 		new_channel._key = channells.front().second;
-		if (_server->createChannel(new_channel))
+
+		int sts = _server->createChannel(new_channel);
+		try
 		{
-			// channel exist
+			Channel &channel = find_channel_add_user(new_channel, _server->channels, message);
+			message.set_param(new_channel._name);
+			_server->sendMessage(message);
+			if (!sts)
+			{
+				message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,new_channel._name, ":This is my cool channel!" ));
+				_server->sendMessage_err(message);
+				message.clear_final();
+				channel._users.at(0).owner = 1;
+				// channel not exist
+			}
+			else
+				_server->sendMessageChannel(message, channel._name);
+			message.set_message_error(RPL_NAMREPLY(_server->serverName,client->_client_user.nickname ,new_channel._name,channel.get_channels_users()));
+			_server->sendMessage_err(message);
+			message.set_message_error(RPL_ENDOFNAMES(_server->serverName,client->_client_user.nickname ,new_channel._name));
+			_server->sendMessage_err(message);
 		}
-		// channel not exist
-		find_channel_add_user(new_channel, _server->channels, message);
-		message.set_param(new_channel._name);
-		_server->sendMessage(message);
+		catch(std::string& e)
+		{
+			;
+			if (e == "key invalid")
+			{
+				message.set_message_error(ERR_BADCHANNELKEY(_server->serverName,client->_client_user.nickname ,new_channel._name));
+				_server->sendMessage_err(message);
+			}
+		
+		}
 		channells.pop();
-		message.clear_final();
 	}
-	// if (!message.length())
-	// {
-	// 	std::cout << "--------join ende-------" << std::endl;
-	// 	return ;
-	// }
 }

@@ -31,6 +31,8 @@ public:
 	void unset_mode(int flag);
 	bool get_mode_status(int flag);
 
+	std::string get_channels_users();
+
 	Channel&	operator=(Channel const &);
 	bool operator == (const Channel &);
 	bool operator == ( Channel &);

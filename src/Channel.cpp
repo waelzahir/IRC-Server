@@ -76,6 +76,32 @@ void Channel::remove_user(const User &user)
 		_users.erase(it);
 }
 
+std::string Channel::get_channels_users()
+{
+	std::string lst;
+	std::vector<User>::iterator it;
+
+	for (it = _users.begin(); it != _users.end();it++ )
+	{
+		if ((*it).owner == 1)
+			lst += "@";
+		lst += (*it).nickname;
+		if ((it + 1) != _users.end())
+			lst += " ";
+	}
+	return lst;
+}
+
+
+
+
+
+
+
+
+
+
+
 void Channel::set_mode(int flag)
 {
 	mode |= flag;

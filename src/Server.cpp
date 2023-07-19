@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/19 06:22:21 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/19 08:03:30 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,11 @@ void    Server::sendMessage(Message message) /* this method broadcast message to
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
 }
 
+void    Server::sendMessage_err(Message message) /* this method broadcast message to  client*/
+{
+    send(message._sender.fd, message._final_message.c_str(), message.size(),0);
+}
+
 void    Server::sendMessage(Message& message, const Client &cl) /* this method broadcast message to  client*/
 {
     message.set_message();
@@ -154,9 +159,8 @@ void    Server::sendMessage_user(Message& message, std::string &nickname, const 
     catch(const std::exception& e)
     { 
         
-        const_cast<Channel &>(channel).remove_user(User("", nickname));    
         // check user not found in nickmak
-        
+        const_cast<Channel &>(channel).remove_user(User("", nickname));    
     }
 }
 
@@ -189,6 +193,7 @@ void    Server::sendMessageChannel(Message& message, std::string channel)
     }
     catch(const std::exception& e)
     {
+        
         // channel not found
     }
 }

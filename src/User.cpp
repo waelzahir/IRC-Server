@@ -1,11 +1,11 @@
 #include "User.hpp"
 
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
-User::User(): connected(0), welcomed(1)
+User::User(): connected(0), welcomed(1), owner(-1)
 {
 	// std::cout << "User Constructor called" << std::endl;
 }
-User::User(std::string _u, std::string _n) : username(_u), nickname(_n)
+User::User(std::string _u, std::string _n) : username(_u), nickname(_n), owner(-1)
 {
 	// std::cout << "User paramitrized Constructor called" << std::endl;
 }
@@ -26,6 +26,10 @@ User&   User::operator=(User const & other )
 {
 	this->nickname = other.nickname;
 	this->username = other.username;
+	this->welcomed = other.welcomed;
+	this->connected = other.connected;
+	this->pass_auth = other.pass_auth;
+	this->owner = other.owner;
 	return *this;
 }
 bool User::operator == (const User &_o)

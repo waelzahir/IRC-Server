@@ -10,11 +10,12 @@
 class User
 {
 public:
+	int 		connected;
+	int 		welcomed;
+	int 		owner;
 	std::string username;
 	std::string nickname;
 	std::string pass_auth;
-	int 		connected;
-	int 		welcomed;
 	void	activateAuth();
 	User();
 	User(std::string, std::string);
