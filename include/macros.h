@@ -16,8 +16,9 @@
 # define RPL_MYINFO(server , nick,modes) server + " 004 " + nick + " ircserv 1 " + modes + "\r\n"
 # define RPL_ISUPPORT(server, nick) server + " 005 " + nick + " :are supported by this server\r\n"
 
-# define ERR_NOSUCHNICK(server, nick, dest) server + " 401 " + nick + " " + dest + " : No Such nickname\r\n"
+# define ERR_NOSUCHNICK(server, nick, dest) server + " 401 " + nick + " " + dest + " : No such nick/channel\r\n"
 # define ERR_CANNOTSENDTOCHAN(server, nick, dest) server + " 404 " + nick + " " + dest + " :Cannot send to channel\r\n"
+
 
 # define ERR_NORECIPIENT(server, nick, command) server +  " 411 " + nick + " :No recipient given(" + command + ")\r\n"
 # define ERR_NOTEXTTOSEND(server, nick) server +  " 412 " + nick + " :No text to send\r\n"

@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/20 03:52:19 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/20 04:14:16 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
                 }
                 catch(...)
                 {
-                    sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+                    sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
                 }
             }
             else
@@ -89,7 +89,7 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
                 }
                 catch (...)
                 {
-                    sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+                    sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
                 }
                 /* do something*/
             }
