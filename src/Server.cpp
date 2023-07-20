@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/19 08:03:30 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/20 04:35:51 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,8 @@ void    Server::sendMessageChannel(Message& message, std::string channel)
     }
     catch(const std::exception& e)
     {
-        
+        message.set_message_error(ERR_NOSUCHNICK(this->serverName, message._sender._client_user.nickname, channel));
+        this->sendMessage_err(message);
         // channel not found
     }
 }
