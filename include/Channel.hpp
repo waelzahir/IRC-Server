@@ -26,6 +26,9 @@ public:
 	int add_user(User &, std::string&);
 	void remove_user(User &);
 	void remove_user(const User &);
+	User* get_user(std::string &name_user);
+	User* get_user(const User& user);
+	User* get_user(User& user);
 
 	void set_mode(int flag);
 	void unset_mode(int flag);

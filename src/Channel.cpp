@@ -76,6 +76,8 @@ void Channel::remove_user(const User &user)
 		_users.erase(it);
 }
 
+
+
 std::string Channel::get_channels_users()
 {
 	std::string lst;
@@ -93,12 +95,27 @@ std::string Channel::get_channels_users()
 }
 
 
-
-
-
-
-
-
+User* Channel::get_user(std::string &nickname)
+{
+	std::vector<User>::iterator it = find(_users.begin(), _users.end(),User("", nickname));
+	if (it != _users.end())
+		return &(*it);
+	return NULL;
+}
+User* Channel::get_user(const User& user)
+{
+	std::vector<User>::iterator it = find(_users.begin(), _users.end(),user);
+	if (it != _users.end())
+		return &(*it);
+	return NULL;
+}
+User* Channel::get_user(User& user)
+{
+	std::vector<User>::iterator it = find(_users.begin(), _users.end(),user);
+	if (it != _users.end())
+		return &(*it);
+	return NULL;
+}
 
 
 
