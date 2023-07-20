@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/19 07:53:48 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/20 03:52:19 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,17 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         {
             if (isChannel(where.second))
             {
-                message.set_param(where.second);
-                message.set_trailing(what.second);
-                _server->sendMessageChannel(message, where.second);
-                message.clear_final();
-                /* do something*/
+                try{
+                    std::vector<User>&users = this->_server->channels.at(where.second)._users;
+                    message.set_param(where.second);
+                    message.set_trailing(what.second);
+                    _server->sendMessageChannel(message, where.second);
+                    message.clear_final();
+                }
+                catch(...)
+                {
+                    sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+                }
             }
             else
             {
@@ -73,10 +79,18 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         {
             if (isChannel(where.second))
             {
-                message.set_param(where.second);
-                message.set_trailing(what.second);
-                _server->sendMessageChannel(message, where.second);
-                message.clear_final();
+                try
+                {
+                    std::vector<User>&users = this->_server->channels.at(where.second)._users;
+                    message.set_param(where.second);
+                    message.set_trailing(what.second);
+                    _server->sendMessageChannel(message, where.second);
+                    message.clear_final();
+                }
+                catch (...)
+                {
+                    sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+                }
                 /* do something*/
             }
             else
@@ -95,5 +109,3 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         loop--;
     }
 }
-
-// sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, destt.second),client->fd);
