@@ -36,7 +36,16 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 {
 
 	std::map<std::string, Channel>::iterator it = channels.find(channel._name); 
-	int status = (*it).second.add_user(*channel._owner, channel._key);
+	if (((*it).second).get_mode_status(I_MODE) && ((*it).second).inveted.find(channel._owner->nickname) == ((*it).second).inveted.end() )
+	{
+		throw std::string("not invited");
+	}
+	if (((*it).second).get_mode_status(L_MODE) && ((*it).second)._users.size() >= ((*it).second)._user_limit)
+	{
+		throw std::string("limits");
+	}
+	int status = (*it).second.add_user(*((*it).second)._owner, ((*it).second)._key);
+	
 	if (status == 1) // key invalid
 		throw std::string("key invalid");
 	else if (status == 2) // user already in channel
@@ -46,6 +55,7 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 
 void Commands::join(Client *client, std::stringstream &_stream)
 {
+
 	std::queue<std::pair<std::string, std::string> > channells;
 	channells = get_channels_key(_stream);
 	Message message(*client,"JOIN",client->_client_user.nickname);
@@ -69,7 +79,7 @@ void Commands::join(Client *client, std::stringstream &_stream)
 			_server->sendMessage(message);
 			if (!sts)
 			{
-				message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,new_channel._name, ":This is my cool channel!" ));
+				message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,new_channel._name, "This is my cool channel!" ));
 				_server->sendMessage_err(message);
 				message.clear_final();
 				channel._users.at(0).owner = 1;
@@ -84,13 +94,22 @@ void Commands::join(Client *client, std::stringstream &_stream)
 		}
 		catch(std::string& e)
 		{
-			;
+			
 			if (e == "key invalid")
 			{
 				message.set_message_error(ERR_BADCHANNELKEY(_server->serverName,client->_client_user.nickname ,new_channel._name));
 				_server->sendMessage_err(message);
 			}
-		
+			else if (e == "not invited")
+			{
+				message.set_message_error(ERR_INVITEONLYCHAN(_server->serverName,client->_client_user.nickname ,new_channel._name));
+				_server->sendMessage_err(message);
+			}
+			else if (e == "limits")
+			{
+				message.set_message_error(ERR_CHANNELISFULL(_server->serverName, client->_client_user.nickname ,new_channel._name));
+				_server->sendMessage_err(message);
+			}
 		}
 		channells.pop();
 	}

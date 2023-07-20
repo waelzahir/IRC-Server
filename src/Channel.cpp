@@ -7,7 +7,7 @@ Channel::Channel()
 }
 Channel::Channel(std::string name) : _name(name) , mode(0), _key("")
 {
-	
+	_user_limit = -1;
 }
 
 Channel::Channel(const Channel &other)
@@ -28,6 +28,7 @@ Channel&   Channel::operator=(Channel const & other )
 	this->_key   = other._key;
 	this->_users = other._users;
 	this->_owner = other._owner;
+	_user_limit = other._user_limit;
 	return *this;
 }
 bool Channel::operator == (const Channel &_o)
@@ -50,6 +51,7 @@ int Channel::add_user(User &user, std::string &key)
 {
 	std::vector<User>::iterator it;
 	it = find(_users.begin(), _users.end(), user);
+	
 	if (it == _users.end())
 	{
 		if (_key == key)
@@ -61,19 +63,21 @@ int Channel::add_user(User &user, std::string &key)
 		return 2;
 	return 0;
 }
-void Channel::remove_user(User &user)
+int Channel::remove_user(User &user)
 {
 	std::vector<User>::iterator it;
 	it = find(_users.begin(), _users.end(), user);
 	if (it != _users.end())
-		_users.erase(it);
+		return _users.erase(it), 0;
+	return 1;
 }
-void Channel::remove_user(const User &user)
+int Channel::remove_user(const User &user)
 {
 	std::vector<User>::iterator it;
 	it = find(_users.begin(), _users.end(), user);
 	if (it != _users.end())
-		_users.erase(it);
+		return _users.erase(it), 0;
+	return 1;
 }
 
 

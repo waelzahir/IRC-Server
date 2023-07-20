@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/20 04:05:04 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/20 08:32:21 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void sendHelper(std::string message, int destination)
 static void sendHelper(std::string message, Channel &chanel)
 {
 }
+
+
 void Commands::privmsg(Client *client, std::stringstream &stream)
 {
     ReqParser parser(stream);
@@ -39,21 +41,22 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
     std::pair<int, std::string> where = parser.getToken();
     std::pair<int, std::string> what = parser.getToken();
     if (where.first != 1)
+    {
+        std::cout << "hello" << std::endl;
         try
         {
             if (isChannel(where.second))
             {
-                try{
-                    std::vector<User>&users = this->_server->channels.at(where.second)._users;
-                    message.set_param(where.second);
-                    message.set_trailing(what.second);
-                    _server->sendMessageChannel(message, where.second);
-                    message.clear_final();
-                }
-                catch(...)
+                Channel& channel= this->_server->channels.at(where.second);
+                if (!channel.get_user(client->_client_user))
                 {
                     sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
-                }
+                    return;
+                }    
+                message.set_param(where.second);
+                message.set_trailing(what.second);
+                _server->sendMessageChannel(message, where.second);
+                message.clear_final();
             }
             else
             {
@@ -70,27 +73,28 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
             sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
             return;
         }
+    }
     int loop = parser.ListedParse(where);
     while (loop)
     {
-        std::cout << loop << std::endl;
         where = parser.getToken();
         try
         {
             if (isChannel(where.second))
             {
-                try
-                {
-                    std::vector<User>&users = this->_server->channels.at(where.second)._users;
-                    message.set_param(where.second);
-                    message.set_trailing(what.second);
-                    _server->sendMessageChannel(message, where.second);
-                    message.clear_final();
-                }
-                catch (...)
+              
+                Channel& channel = this->_server->channels.at(where.second);
+                if (!channel.get_user(client->_client_user))
                 {
                     sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
+                    loop--;
+                    continue;
                 }
+                
+                message.set_param(where.second);
+                message.set_trailing(what.second);
+                _server->sendMessageChannel(message, where.second);
+                message.clear_final();
                 /* do something*/
             }
             else
@@ -104,7 +108,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         catch (...)
         {
             sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
-            return;
         }
         loop--;
     }

@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/19 08:03:30 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/20 09:48:05 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void    Server::addClient(Client *client)
 void    Server::removeClient(Client *client)
 {
 
+    std::map<std::string, Channel>::iterator it;
     if (client == NULL)
         {
             /*handle error acordinly*/
@@ -121,6 +122,16 @@ void    Server::removeClient(Client *client)
     {
         return ;
     }
+    Message mess(*client, "PART", client->_client_user.nickname);
+    for (it = channels.begin(); it != channels.end(); it++)
+    {
+        if ((*it).second.remove_user(client->_client_user))
+            continue;
+        mess.add_param((*it).second._name);
+        sendMessageChannel(mess,(*it).second._name);
+        mess.clear_final();
+    }
+    
     this->clients.erase(client->fd);
     if (client->_client_user.nickname.length())
         this->nickmak.erase(client->_client_user.nickname);
@@ -134,6 +145,7 @@ void    Server::removeClient(Client *client)
 void    Server::sendMessage(Message message) /* this method broadcast message to  client*/
 {
     message.set_message();
+    std::cout<< "|" << message._final_message <<"|";
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
 }
 
@@ -193,7 +205,8 @@ void    Server::sendMessageChannel(Message& message, std::string channel)
     }
     catch(const std::exception& e)
     {
-        
+        message.set_message_error(ERR_NOSUCHNICK(this->serverName, message._sender._client_user.nickname, channel));
+        this->sendMessage_err(message);
         // channel not found
     }
 }

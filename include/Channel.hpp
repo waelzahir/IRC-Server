@@ -16,7 +16,9 @@ public:
 	char					mode;
 	std::string				_key;
 	std::vector<User>		_users;
+	std::set<std::string>	inveted;
 	User					*_owner;
+	int						_user_limit;
 
 	Channel();
 	Channel(std::string);
@@ -24,8 +26,8 @@ public:
 	~Channel();
 
 	int add_user(User &, std::string&);
-	void remove_user(User &);
-	void remove_user(const User &);
+	int remove_user(User &);
+	int remove_user(const User &);
 	User* get_user(std::string &name_user);
 	User* get_user(const User& user);
 	User* get_user(User& user);

@@ -16,8 +16,9 @@
 # define RPL_MYINFO(server , nick,modes) server + " 004 " + nick + " ircserv 1 " + modes + "\r\n"
 # define RPL_ISUPPORT(server, nick) server + " 005 " + nick + " :are supported by this server\r\n"
 
-# define ERR_NOSUCHNICK(server, nick, dest) server + " 401 " + nick + " " + dest + " : No Such nickname\r\n"
+# define ERR_NOSUCHNICK(server, nick, dest) server + " 401 " + nick + " " + dest + " : No such nick/channel\r\n"
 # define ERR_CANNOTSENDTOCHAN(server, nick, dest) server + " 404 " + nick + " " + dest + " :Cannot send to channel\r\n"
+
 
 # define ERR_NORECIPIENT(server, nick, command) server +  " 411 " + nick + " :No recipient given(" + command + ")\r\n"
 # define ERR_NOTEXTTOSEND(server, nick) server +  " 412 " + nick + " :No text to send\r\n"
@@ -38,6 +39,10 @@
 # define RPL_NAMREPLY(server, client, channel, nick)  server + " 353 " + client +  " @ "+ channel +" :" + nick
 # define RPL_ENDOFNAMES(server, client, channel)  server + " 366 " + client +  " "+ channel + " :End of /NAMES list"
 # define ERR_BADCHANNELKEY(server, client, channel)  server + " 475 " + client +  " "+ channel + " :Cannot join channel (+k)"
-
+# define ERR_INVITEONLYCHAN(server, client, channel)  server + " 473 " + client +  " "+ channel + " :Cannot join channel (+i)"
+# define ERR_CHANNELISFULL(server, client, channel)  server + " 471 " + client +  " "+ channel + " :Cannot join channel (+l)"
+# define ERR_NOSUCHCHANNEL(server, client, channel)  server + " 403 " + client +  " "+ channel + " :No such channel"
+# define ERR_UMODEUNKNOWNFLAG(server, client)  server + " 501 " + client + " :Unknown MODE flag"
+# define RPL_CHANNELMODEIS(server, client, channel,op, param)  server + " 324 " + client +  " " + channel +  " " + op + " " + param
 
 #endif

@@ -36,7 +36,9 @@ public:
 	void	privmsg(Client *client, std::stringstream &stream);
 	void	welcome(Client *client, std::stringstream &stream);
 	
-
+	// helpers
+	void check_channel(std::string &channel);
+	void check_parse(std::string &channel, std::string &option, std::string &param);
 	Commands&	operator=(Commands const &);
 };
 
