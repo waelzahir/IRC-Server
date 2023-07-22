@@ -17,7 +17,6 @@ public:
 	std::string				_key;
 	std::vector<User>		_users;
 	std::set<std::string>	inveted;
-	User					*_owner;
 	int						_user_limit;
 
 	Channel();

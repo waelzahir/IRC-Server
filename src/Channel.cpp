@@ -3,7 +3,7 @@
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
 Channel::Channel()
 {
-	std::cout << "Channel Constructor called" << std::endl;
+	// std::cout << "Channel Constructor called" << std::endl;
 }
 Channel::Channel(std::string name) : _name(name) , mode(0), _key("")
 {
@@ -18,7 +18,7 @@ Channel::Channel(const Channel &other)
 /*** -------------------------------- DESTRUCTOR --------------------------------*/
 Channel::~Channel()
 {
-	std::cout << "Channel Destructor called" << std::endl;
+	// std::cout << "Channel Destructor called" << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/
@@ -27,7 +27,6 @@ Channel&   Channel::operator=(Channel const & other )
 	this->_name  = other._name;
 	this->_key   = other._key;
 	this->_users = other._users;
-	this->_owner = other._owner;
 	_user_limit = other._user_limit;
 	return *this;
 }

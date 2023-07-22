@@ -37,9 +37,9 @@ void	Commands::execute(Client *client, std::string Command)
 {
 	std::stringstream strm(Command);
 	std::string name;
-	// std::cout <<  strm.str() << std::endl;
 	if (!std::getline(strm, name, ' '))
 		return ;
+	
 	void  (Commands::*ptr)(Client*, std::stringstream&) = this->getCommand(name);
 	if ((!authMethods(name) && !client->_client_user.connected ) || ptr == NULL)
 	{
@@ -69,6 +69,7 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["NICK"] = &Commands::nick;
 	commands["MODE"] = &Commands::mode;
 	commands["JOIN"] = &Commands::join;
+	commands["WHO"] = &Commands::who;
 	commands["PRIVMSG"] = &Commands::privmsg;
 
 	try

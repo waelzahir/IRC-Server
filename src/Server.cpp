@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/20 09:48:05 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/22 12:17:42 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ void    Server::removeClient(Client *client)
 void    Server::sendMessage(Message message) /* this method broadcast message to  client*/
 {
     message.set_message();
-    std::cout<< "|" << message._final_message <<"|";
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
 }
 
@@ -197,6 +196,7 @@ void    Server::sendMessageChannel(Message& message, std::string channel)
         std::vector<User>&users = channels.at(channel)._users;
         /* code */
         message.set_message();
+        std::cout << message._final_message << std::endl;
         for (it  = users.begin(); it != users.end(); it++)
         {
             if ((*it).nickname != message._sender._client_user.nickname)

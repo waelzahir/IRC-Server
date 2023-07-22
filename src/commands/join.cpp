@@ -36,7 +36,7 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 {
 
 	std::map<std::string, Channel>::iterator it = channels.find(channel._name); 
-	if (((*it).second).get_mode_status(I_MODE) && ((*it).second).inveted.find(channel._owner->nickname) == ((*it).second).inveted.end() )
+	if (((*it).second).get_mode_status(I_MODE) && ((*it).second).inveted.find(message._sender._client_user.nickname) == ((*it).second).inveted.end() )
 	{
 		throw std::string("not invited");
 	}
@@ -44,7 +44,7 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 	{
 		throw std::string("limits");
 	}
-	int status = (*it).second.add_user(*((*it).second)._owner, ((*it).second)._key);
+	int status = (*it).second.add_user(message._sender._client_user, ((*it).second)._key);
 	
 	if (status == 1) // key invalid
 		throw std::string("key invalid");
@@ -68,7 +68,7 @@ void Commands::join(Client *client, std::stringstream &_stream)
 	while (channells.size())
 	{
 		Channel new_channel(channells.front().first);
-		new_channel._owner = &client->_client_user;
+		// new_channel._owner = &client->_client_user;
 		new_channel._key = channells.front().second;
 
 		int sts = _server->createChannel(new_channel);
