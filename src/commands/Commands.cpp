@@ -35,6 +35,7 @@ static bool authMethods(std::string name)
 }
 void	Commands::execute(Client *client, std::string Command)
 {
+	
 	if (client == NULL)
 		return ;
 	std::stringstream strm(Command);

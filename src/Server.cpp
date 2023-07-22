@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/22 12:19:15 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/22 16:44:04 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,8 @@ int    Server::get_message(int fd, int index)
     char    buffer[1024];
     bzero(buffer, 1024);
     Client *client = this->get_client_adress(fd);
+    if (client == NULL)
+        return std::cout << "null" << std::endl, -1;
     int res = recv(fd, buffer, 1000, 0);
     if (res == 0)
     {
