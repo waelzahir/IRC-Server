@@ -35,6 +35,7 @@ public:
 	void	join(Client *client, std::stringstream &stream);
 	void	who(Client *client, std::stringstream &stream);
 	void	privmsg(Client *client, std::stringstream &stream);
+	void	quit(Client *client, std::stringstream &stream);
 	void	welcome(Client *client, std::stringstream &stream);
 	
 	// helpers

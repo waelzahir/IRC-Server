@@ -35,6 +35,8 @@ static bool authMethods(std::string name)
 }
 void	Commands::execute(Client *client, std::string Command)
 {
+	if (client == NULL)
+		return ;
 	std::stringstream strm(Command);
 	std::string name;
 	if (!std::getline(strm, name, ' '))
@@ -71,6 +73,8 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["JOIN"] = &Commands::join;
 	commands["WHO"] = &Commands::who;
 	commands["PRIVMSG"] = &Commands::privmsg;
+	commands["QUIT"] = &Commands::quit;
+
 
 	try
 	{

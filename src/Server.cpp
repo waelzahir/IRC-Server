@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/22 12:17:42 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/22 12:19:15 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,7 @@ void    Server::execReq()
     while (this->Mqueue.size())
     {
         Commands command(this);
-        command.execute( get_client_adress(this->Mqueue.front().first) ,this->Mqueue.front().second);
+        command.execute(get_client_adress(this->Mqueue.front().first) ,this->Mqueue.front().second);
         this->Mqueue.pop();
     }
 
@@ -381,7 +381,6 @@ bool    Server::checkNick(std::string &nick, Client *client)
         }
         return false;
     }
-   
     return true;
 }
 
