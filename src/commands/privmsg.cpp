@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/20 08:32:21 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:34:34 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
     std::pair<int, std::string> what = parser.getToken();
     if (where.first != 1)
     {
-        std::cout << "hello" << std::endl;
         try
         {
             if (isChannel(where.second))

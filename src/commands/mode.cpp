@@ -91,7 +91,6 @@ optr get_option(char op)
 
 
 	commands['o'] = &mode_o;
-	std::cout << op << std::endl;
 
 	try
 	{
