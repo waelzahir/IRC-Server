@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/23 03:32:18 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/23 19:11:23 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ Server::Server(std::string pass, int port, int serial )
     std::stringstream serialto_str;
     std::string serial_str;
     
+    // struct hostent *lh = gethostbyname("e3r11p2");
+
+    // if (lh)
+    //     std::cout << inet_ntoa(*(struct in_addr *)lh->h_addr) << std::endl;;
+    
+
     serialto_str << serial;
     serialto_str >> serial_str;
      
@@ -315,7 +321,6 @@ int    Server::get_message(int fd, int index)
     if (res == 0)
     {
         this->removeClient(client);
-        this->fds.erase(this->fds.begin() + index);
         index--;
         return -1;
     
