@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/23 23:35:19 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:46:23 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,15 @@ void    Server::removeClient(Client *client)
         return ;
     }
     Message mess(*client, "PART", client->_client_user.nickname);
+    
     for (it = channels.begin(); it != channels.end(); it++)
     {
         if ((*it).second.remove_user(client->_client_user))
             continue;
         mess.add_param((*it).second._name);
         sendMessageChannel(mess,(*it).second._name);
+        if (!(*it).second._users.size())
+            removeChannel((*it).second);
         mess.clear_final();
     }
     for (int i = 0; i < this->fds.size(); i++)
