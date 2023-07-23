@@ -37,6 +37,8 @@ public:
 	void	privmsg(Client *client, std::stringstream &stream);
 	void	quit(Client *client, std::stringstream &stream);
 	void	welcome(Client *client, std::stringstream &stream);
+	void	bot(Client *client, std::stringstream &stream);
+
 	
 	// helpers
 	void check_channel(std::string &channel);

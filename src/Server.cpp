@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/23 23:46:23 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/24 00:23:11 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void    Server::removeClient(Client *client)
             continue;
         mess.add_param((*it).second._name);
         sendMessageChannel(mess,(*it).second._name);
+        std::cerr<< "hna" <<std::endl;
         if (!(*it).second._users.size())
             removeChannel((*it).second);
         mess.clear_final();
