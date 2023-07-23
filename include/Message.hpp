@@ -24,7 +24,7 @@ public:
 
 	Message();
 	Message(Client	&sender,const char * command);
-	Message(Client	&sender,const char * command, std::string &source);
+	Message(Client	&sender,const char * command, std::string source);
 	Message(Message const &);
 
 	void add_param(std::string &param);

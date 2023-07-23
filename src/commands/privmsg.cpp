@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/20 08:32:21 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:19:15 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void sendHelper(std::string message, Channel &chanel)
 void Commands::privmsg(Client *client, std::stringstream &stream)
 {
     ReqParser parser(stream);
-    Message message(*client, "PRIVMSG", client->_client_user.nickname);
+    Message message(*client, "PRIVMSG", client->_client_user.nickname + "!" + client->_client_user.username + "@" + client->host);
 
     if (parser.getStatus() < 2)
     {
@@ -60,7 +60,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
             }
             else
             {
-                Message message(*client, "PRIVMSG", client->_client_user.nickname);
                 message.set_param(where.second);
                 message.set_trailing(what.second);
                 _server->sendMessage(message, *this->_server->nickmak.at(where.second));
