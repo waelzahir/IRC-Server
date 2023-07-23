@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/22 16:44:04 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/23 03:32:18 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,14 @@ void    Server::removeClient(Client *client)
         sendMessageChannel(mess,(*it).second._name);
         mess.clear_final();
     }
-    
+    for (int i = 0; i < this->fds.size(); i++)
+    {
+        if (client->fd == this->fds[i].fd)
+        {
+            this->fds.erase(this->fds.begin() + i);
+            break ;
+        }
+    }
     this->clients.erase(client->fd);
     if (client->_client_user.nickname.length())
         this->nickmak.erase(client->_client_user.nickname);
