@@ -2,6 +2,7 @@
 #include "ReqParser.hpp"
 #include "Server.hpp"
 
+
 void	Commands::user(Client *client, std::stringstream &stream)
 {
 	ReqParser	parser(stream);
@@ -12,7 +13,7 @@ void	Commands::user(Client *client, std::stringstream &stream)
 		send(client->fd, message.c_str(), message.length() , 0);
 		return ;
 	}
-	if (!parser.getStatus())
+	if (parser.getStatus() < 4)
 	{
 		message = ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "USER");
 		send(client->fd, message.c_str(), message.length() , 0);

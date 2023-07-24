@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 00:23:11 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/24 18:48:49 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,8 @@ int    Server::get_message(int fd, int index)
     if (client == NULL)
         return std::cout << "null" << std::endl, -1;
     int res = recv(fd, buffer, 1000, 0);
+    std::cout << buffer ;
+ 
     if (res == 0)
     {
         this->removeClient(client);

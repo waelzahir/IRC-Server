@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 17:30:43 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 17:42:57 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/24 17:47:00 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ static	bool checkNickValidity(std::string &nick)
 	for (int i = 0; i < nick.length(); i++)
 	{
 		if (!isalpha(nick[i]) && !isdigit(nick[i]) && !otherCharExeptions(nick[i]))
-		{
-			std::cout << "hna" <<std::endl;
 			return 1;
-		}
 	}
 	if (isdigit(nick[0]))
 		return 1;
