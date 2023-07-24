@@ -1,5 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   nick.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 17:30:43 by ozahir            #+#    #+#             */
+/*   Updated: 2023/07/24 17:42:57 by ozahir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "Commands.hpp"
 #include "Server.hpp"
+#include "ReqParser.hpp"
+
 
 static	std::string nextToken(std::stringstream &stream)
 {
@@ -9,9 +24,21 @@ static	std::string nextToken(std::stringstream &stream)
 			break ;
 	return token;
 } 
+static bool otherCharExeptions(char	c)
+{
+	return (c == '{' || c == '}' || c == '[' || c == ']' || c == '|');	
+}
 static	bool checkNickValidity(std::string &nick)
 {
-	if (nick[0] == ':' || nick[0] == '#' || nick[0] == '&' || isdigit(nick[0]) || !isalpha(nick[0]))
+	for (int i = 0; i < nick.length(); i++)
+	{
+		if (!isalpha(nick[i]) && !isdigit(nick[i]) && !otherCharExeptions(nick[i]))
+		{
+			std::cout << "hna" <<std::endl;
+			return 1;
+		}
+	}
+	if (isdigit(nick[0]))
 		return 1;
 	return 0;
 }
