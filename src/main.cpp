@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 23:05:11 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/24 18:42:10 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/24 22:38:17 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 int main(void)
 {
 	IrcSystem irc;
-	irc.set_server(Server("pas", 80));
+	irc.set_server(Server("pas", 9000));
 	irc.start_loop();
 	return 0;
 }

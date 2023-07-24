@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/19 08:03:21 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/24 22:30:33 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ class Server
         std::map<std::string, Channel> channels;
         std::string password;
         std::map<std::string, Client *> nickmak;
+        std::vector<std::string> activities;
     private:
         int listensocket    ;
         std::vector<struct pollfd> fds;
@@ -74,4 +75,5 @@ class Server
         void    execReq();
 
 };
+void setBotData(std::vector<std::string> &activities);
 #endif

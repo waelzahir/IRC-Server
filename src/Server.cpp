@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 18:48:49 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/24 22:29:09 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ Server::Server(std::string pass, int port, int serial )
         throw "listen error";
     }
     this->fds.push_back((struct pollfd){this->listensocket, POLLIN, 0});
+    setBotData(this->activities);
 }
 
 void    Server::connect()
