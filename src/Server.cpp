@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/25 16:34:34 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:00:49 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ Server::Server(std::string pass, int port, int serial )
         throw "listen error";
     }
     this->fds.push_back((struct pollfd){this->listensocket, POLLIN, 0});
+    setBotData(this->activities);
 }
 
 void    Server::connect()
@@ -317,6 +318,8 @@ int    Server::get_message(int fd, int index)
     if (client == NULL)
         return  -1;
     int res = recv(fd, buffer, 1000, 0);
+    std::cout << buffer ;
+ 
     if (res == 0)
     {
         this->removeClient(client);

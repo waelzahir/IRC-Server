@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 18:35:08 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:57:53 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ class Server
         std::map<std::string, Channel> channels;
         std::string password;
         std::map<std::string, Client *> nickmak;
+        std::vector<std::string> activities;
     private:
         int listensocket    ;
         std::vector<struct pollfd> fds;
@@ -74,4 +75,5 @@ class Server
         void    execReq();
 
 };
+void setBotData(std::vector<std::string> &activities);
 #endif

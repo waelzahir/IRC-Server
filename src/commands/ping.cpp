@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   ping.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 23:05:11 by tel-mouh          #+#    #+#             */
-/*   Updated: 2023/07/24 22:38:17 by ozahir           ###   ########.fr       */
+/*   Created: 2023/07/24 17:52:35 by ozahir            #+#    #+#             */
+/*   Updated: 2023/07/24 17:53:06 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "IrcSystem.hpp"
-int main(void)
+
+#include "Commands.hpp"
+#include "Server.hpp"
+
+void	Commands::ping(Client *client, std::stringstream &stream)
 {
-	IrcSystem irc;
-	irc.set_server(Server("pas", 9000));
-	irc.start_loop();
-	return 0;
+    
 }
