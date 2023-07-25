@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   privmsg.cpp                                        :+:      :+:    :+:   */
+/*   notice.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/25 20:57:25 by ozahir           ###   ########.fr       */
+/*   Created: 2023/07/25 20:55:51 by ozahir            #+#    #+#             */
+/*   Updated: 2023/07/25 20:58:27 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "Commands.hpp"
 #include "Server.hpp"
@@ -25,17 +27,13 @@ static void sendHelper(std::string message, int destination)
 }
 
 
-
-void Commands::privmsg(Client *client, std::stringstream &stream)
+void Commands::notice(Client *client, std::stringstream &stream)
 {
     ReqParser parser(stream);
-    Message message(*client, "PRIVMSG", client->_client_user.nickname + "!" + client->_client_user.username + "@" + client->host);
+    Message message(*client, "NOTICE", client->_client_user.nickname + "!" + client->_client_user.username + "@" + client->host);
 
     if (parser.getStatus() < 2)
-    {
-        (parser.getStatus() == 0) ? sendHelper(ERR_NORECIPIENT(this->_server->serverName, client->_client_user.nickname, "PRIVMSG"), client->fd) : sendHelper(ERR_NOTEXTTOSEND(this->_server->serverName, client->_client_user.nickname), client->fd);
         return;
-    }
     std::pair<int, std::string> where = parser.getToken();
     std::pair<int, std::string> what = parser.getToken();
     if (where.first != 1)
@@ -47,7 +45,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
                 Channel& channel= this->_server->channels.at(where.second);
                 if (!channel.get_user(client->_client_user))
                 {
-                    sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
                     return;
                 }    
                 message.set_param(where.second);
@@ -66,7 +63,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         }
         catch (...)
         {
-            sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
             return;
         }
     }
@@ -82,7 +78,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
                 Channel& channel = this->_server->channels.at(where.second);
                 if (!channel.get_user(client->_client_user))
                 {
-                    sendHelper(ERR_CANNOTSENDTOCHAN(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
                     loop--;
                     continue;
                 }
@@ -103,7 +98,6 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         }
         catch (...)
         {
-            sendHelper(ERR_NOSUCHNICK(this->_server->serverName, client->_client_user.nickname, where.second), client->fd);
         }
         loop--;
     }

@@ -74,6 +74,7 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["JOIN"] = &Commands::join;
 	commands["WHO"] = &Commands::who;
 	commands["PRIVMSG"] = &Commands::privmsg;
+	commands["NOTICE"] = &Commands::notice;
 	commands["QUIT"] = &Commands::quit;
 	commands["PING"] = &Commands::ping;
 	commands["BOT"] = &Commands::bot;
