@@ -47,7 +47,15 @@ void Message::add_param(std::string &param)
 {
 	if (_param != "")
 	{
-		param += ",";
+		_param += ",";
+	}
+	_param += param;
+}
+void Message::add_param_space(std::string &param)
+{
+	if (_param != "")
+	{
+		_param += " ";
 	}
 	_param += param;
 }

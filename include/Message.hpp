@@ -28,6 +28,7 @@ public:
 	Message(Message const &);
 
 	void add_param(std::string &param);
+	void add_param_space(std::string &param);
 	void set_param(std::string &param);
 	void set_big_param(std::string param);
 	void set_source(std::string &source);

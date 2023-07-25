@@ -48,4 +48,5 @@
 // channel mode
 # define ERR_CHANOPRIVSNEEDED(server, client, channel)  server + " 482 " + client +  " "+ channel + " : :You're not channel operator"
 # define RPL_CREATIONTIME(server, client, channel, timee)  server + " 329 " + client +  " "+ channel + " " + timee
+# define ERR_USERNOTINCHANNEL(server, client, nick , channel)  server + " 441 " + client + " " + nick + " " + channel + " :They aren't on that channel"
 #endif

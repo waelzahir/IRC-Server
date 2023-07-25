@@ -141,7 +141,9 @@ User* Channel::get_user(User& user)
 
 bool  Channel::is_operator(User &user)
 {
-	if (get_user(user)->owner == 1)
+	User *_us = get_user(user);
+	
+	if (_us &&  _us->owner == 1)
 		return true;
 	return false;
 }
