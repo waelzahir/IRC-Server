@@ -3,11 +3,17 @@
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
 Channel::Channel()
 {
+
 	// std::cout << "Channel Constructor called" << std::endl;
 }
-Channel::Channel(std::string name) : _name(name) , mode(0), _key("")
+Channel::Channel(std::string name) : _name(name) , mode(0), _key("") , _topic("This is my cool channel!")
 {
 	_user_limit = -1;
+	std::time_t currentTime = std::time(NULL);
+	currentTime += 10;
+    std::stringstream ss;
+    ss << currentTime;
+    _create_time = ss.str();
 }
 
 Channel::Channel(const Channel &other)
@@ -28,6 +34,11 @@ Channel&   Channel::operator=(Channel const & other )
 	this->_key   = other._key;
 	this->_users = other._users;
 	_user_limit = other._user_limit;
+	_topic  = other._topic;
+	inveted = other.inveted;
+	mode = other.mode;
+	_create_time = other._create_time;
+
 	return *this;
 }
 bool Channel::operator == (const Channel &_o)
@@ -105,6 +116,14 @@ User* Channel::get_user(std::string &nickname)
 		return &(*it);
 	return NULL;
 }
+User* Channel::get_user(const std::string &nickname)
+{
+	std::vector<User>::iterator it = find(_users.begin(), _users.end(),User("", nickname));
+	if (it != _users.end())
+		return &(*it);
+	return NULL;
+}
+
 User* Channel::get_user(const User& user)
 {
 	std::vector<User>::iterator it = find(_users.begin(), _users.end(),user);
@@ -120,7 +139,12 @@ User* Channel::get_user(User& user)
 	return NULL;
 }
 
-
+bool  Channel::is_operator(User &user)
+{
+	if (get_user(user)->owner == 1)
+		return true;
+	return false;
+}
 
 void Channel::set_mode(int flag)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 00:23:11 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/25 16:34:34 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void    Server::sendMessage(Message message) /* this method broadcast message to
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
 }
 
-void    Server::sendMessage_err(Message message) /* this method broadcast message to  client*/
+void    Server::sendMessage_err(Message& message) /* this method broadcast message to  client*/
 {
     send(message._sender.fd, message._final_message.c_str(), message.size(),0);
 }
@@ -315,7 +315,7 @@ int    Server::get_message(int fd, int index)
     bzero(buffer, 1024);
     Client *client = this->get_client_adress(fd);
     if (client == NULL)
-        return std::cout << "null" << std::endl, -1;
+        return  -1;
     int res = recv(fd, buffer, 1000, 0);
     if (res == 0)
     {

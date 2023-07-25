@@ -55,6 +55,10 @@ void Message::set_param(std::string &param)
 {
 	_param = param;
 }
+void Message::set_big_param(std::string param)
+{
+	_param = param;
+}
 void Message::set_source(std::string &source)
 {
 	_source = source;
@@ -86,6 +90,7 @@ void Message::set_message()
 }
 void Message::set_message_error(const std::string &error)
 {
+	_final_message.clear();
 	_final_message = error + "\r\n";
 }
 

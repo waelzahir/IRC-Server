@@ -29,6 +29,7 @@ public:
 
 	void add_param(std::string &param);
 	void set_param(std::string &param);
+	void set_big_param(std::string param);
 	void set_source(std::string &source);
 	void set_command(std::string &command);
 	void set_trailing(std::string &trailing);

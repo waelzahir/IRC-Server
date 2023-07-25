@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/23 23:35:38 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/24 16:44:33 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static bool isChannel(std::string name)
 {
     char c = name[0];
-    return (c == '#');
+    return (c == '#' || c == '&');
 }
 static void sendHelper(std::string message, int destination)
 {

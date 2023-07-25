@@ -44,7 +44,7 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 	{
 		throw std::string("limits");
 	}
-	int status = (*it).second.add_user(message._sender._client_user, ((*it).second)._key);
+	int status = (*it).second.add_user(message._sender._client_user, channel._key);
 	
 	if (status == 1) // key invalid
 		throw std::string("key invalid");
@@ -72,23 +72,30 @@ void Commands::join(Client *client, std::stringstream &_stream)
 		Channel new_channel(channells.front().first);
 		// new_channel._owner = &client->_client_user;
 		new_channel._key = channells.front().second;
-
 		int sts = _server->createChannel(new_channel);
 		try
 		{
 			Channel &channel = find_channel_add_user(new_channel, _server->channels, message);
+			if (!channel._key.empty())
+				channel.set_mode(K_MODE);
 			message.set_param(new_channel._name);
 			_server->sendMessage(message);
 			if (!sts)
 			{
-				message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,new_channel._name, "This is my cool channel!" ));
-				_server->sendMessage_err(message);
 				message.clear_final();
 				channel._users.at(0).owner = 1;
 				// channel not exist
 			}
 			else
 				_server->sendMessageChannel(message, channel._name);
+			message.set_message_error(RPL_CREATIONTIME(_server->serverName, client->_client_user.nickname ,channel._name, "222"));
+			std::cout << "|" <<message._final_message << "|" << std::endl;
+			_server->sendMessage_err(message);
+			message.set_message_error(RPL_CHANNELMODEIS(_server->serverName, client->_client_user.nickname ,channel._name, "+o",""));
+			std::cout << "|" <<message._final_message << "|" << std::endl;
+			_server->sendMessage_err(message);
+			message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,new_channel._name, channel._topic));
+			_server->sendMessage_err(message);
 			message.set_message_error(RPL_NAMREPLY(_server->serverName,client->_client_user.nickname ,new_channel._name,channel.get_channels_users()));
 			_server->sendMessage_err(message);
 			message.set_message_error(RPL_ENDOFNAMES(_server->serverName,client->_client_user.nickname ,new_channel._name));

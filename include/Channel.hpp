@@ -8,6 +8,8 @@
 # include <algorithm>
 # include <math.h>
 # include "User.hpp"
+# include <ctime>
+# include <sstream>
 class Channel
 {
 
@@ -18,6 +20,8 @@ public:
 	std::vector<User>		_users;
 	std::set<std::string>	inveted;
 	int						_user_limit;
+	std::string				_topic;
+	std::string				_create_time;
 
 	Channel();
 	Channel(std::string);
@@ -27,9 +31,11 @@ public:
 	int add_user(User &, std::string&);
 	int remove_user(User &);
 	int remove_user(const User &);
+	User* get_user(const std::string &name_user);
 	User* get_user(std::string &name_user);
 	User* get_user(const User& user);
 	User* get_user(User& user);
+	bool  is_operator(User &);
 
 	void set_mode(int flag);
 	void unset_mode(int flag);

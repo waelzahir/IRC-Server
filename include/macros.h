@@ -37,12 +37,15 @@
 // channel
 # define RPL_TOPIC(server, client, channel, topic)  server + " 332 " + client + " " + channel + " : " + topic 
 # define RPL_NAMREPLY(server, client, channel, nick)  server + " 353 " + client +  " @ "+ channel +" :" + nick
-# define RPL_ENDOFNAMES(server, client, channel)  server + " 366 " + client +  " "+ channel + " :End of /NAMES list"
+# define RPL_ENDOFNAMES(server, client, channel)  server + " 366 " + client +  " "+ channel + " :End of /NAMES list."
 # define ERR_BADCHANNELKEY(server, client, channel)  server + " 475 " + client +  " "+ channel + " :Cannot join channel (+k)"
 # define ERR_INVITEONLYCHAN(server, client, channel)  server + " 473 " + client +  " "+ channel + " :Cannot join channel (+i)"
 # define ERR_CHANNELISFULL(server, client, channel)  server + " 471 " + client +  " "+ channel + " :Cannot join channel (+l)"
 # define ERR_NOSUCHCHANNEL(server, client, channel)  server + " 403 " + client +  " "+ channel + " :No such channel"
 # define ERR_UMODEUNKNOWNFLAG(server, client)  server + " 501 " + client + " :Unknown MODE flag"
-# define RPL_CHANNELMODEIS(server, client, channel,op, param)  server + " 324 " + client +  " " + channel +  " " + op + " " + param
+# define RPL_CHANNELMODEIS(server, client, channel,op, param)  ":" + server + " 324 " + client +  " " + channel +  " " + op  + param
 
+// channel mode
+# define ERR_CHANOPRIVSNEEDED(server, client, channel)  server + " 482 " + client +  " "+ channel + " : :You're not channel operator"
+# define RPL_CREATIONTIME(server, client, channel, timee)  server + " 329 " + client +  " "+ channel + " " + timee
 #endif
