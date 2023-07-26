@@ -83,7 +83,7 @@ void Commands::join(Client *client, std::stringstream &_stream)
 			if (!sts)
 			{
 				message.clear_final();
-				channel._users.at(0).owner = 1;
+				channel._users.at(0).owner = 1; 
 				// channel not exist
 			}
 			else
