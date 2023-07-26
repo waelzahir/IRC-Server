@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/25 19:57:53 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 21:11:12 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 class Server
 {
     public:
-        Server(std::string pass, int port, int serial = 0);
+        Server(std::string pass,std::string port, int serial = 0);
         ~Server();
         void    connect();
         void    disconect();

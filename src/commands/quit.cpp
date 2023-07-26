@@ -6,13 +6,12 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 21:13:46 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 20:32:47 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 21:47:20 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Commands.hpp"
 #include "Server.hpp"
-#include "ReqParser.hpp"
 
 void	Commands::quit(Client *client, std::stringstream &stream)
 {
