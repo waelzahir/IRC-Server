@@ -101,6 +101,7 @@ Channel& Commands::check_channel(std::string &channel)
 	{
 		throw std::string("ERR_NOSUCHCHANNEL");
 	}
+	std::cout << "channe exist" << std::endl ; 
 	return (*it).second;
 }
 

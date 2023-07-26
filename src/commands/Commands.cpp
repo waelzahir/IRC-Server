@@ -31,7 +31,7 @@ Commands&   Commands::operator=(Commands const & other )
 /*** --------------------------------- METHODS ----------------------------------*/
 static bool authMethods(std::string name)
 {
-	return (name == "PASS" || name == "NICK" || name == "USER");
+	return (name == "PASS" || name == "NICK" || name == "USER" || name == "CAP");
 }
 void	Commands::execute(Client *client, std::string Command)
 {
@@ -79,6 +79,8 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["QUIT"] = &Commands::quit;
 	commands["PING"] = &Commands::ping;
 	commands["BOT"] = &Commands::bot;
+	commands["PART"] = &Commands::part;
+
 
 
 

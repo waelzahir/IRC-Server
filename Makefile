@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+         #
+#    By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 04:31:34 by tel-mouh          #+#    #+#              #
-#    Updated: 2023/07/22 16:40:07 by tel-mouh         ###   ########.fr        #
+#    Updated: 2023/07/26 00:56:04 by ozahir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ HEADERS = $(wildcard include/*.hpp) $(wildcard include/*.h)
 # ################COMMANDS###########################
 
 RM = rm -rf
-CC = g++ -g -std=c++98  -fsanitize=address
+CC = g++ -g -std=c++98 
+# CC = g++ -g -std=c++98  -fsanitize=address
 HEADERSFLAGS = -I include
 CFLAG = -g $(HEADERSFLAGS)
 #  -Wall -Wextra -Werror 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/25 23:24:00 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 03:10:30 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,17 @@ int    Server::createChannel(Channel& channel)
 
 int    Server::removeChannel(Channel &channel)
 {
-    std::map<std::string, Channel>::iterator it;
-	it = channels.find(channel._name);
-	if (it != channels.end())
-		return channels.erase(it), 0;
+    try
+    {
+        channels.erase(channel._name);
+        std::cout << "deleted" << std::endl;
+        return 0;
+    }
+    catch(...)
+    {
+        std::cout << "error deleting channel" << std::endl;
+        
+    }
     return 1;
 }
 
@@ -114,8 +121,6 @@ void    Server::addClient(Client *client)
 
 void    Server::removeClient(Client *client)
 {
-
-    std::map<std::string, Channel>::iterator it;
     if (client == NULL)
         {
             /*handle error acordinly*/
@@ -130,18 +135,26 @@ void    Server::removeClient(Client *client)
         return ;
     }
     Message mess(*client, "PART", client->_client_user.nickname);
-    
-    for (it = channels.begin(); it != channels.end(); it++)
+    std::map<std::string, Channel>::iterator it = channels.begin();
+    while  (it != channels.end())
     {
-        if ((*it).second.remove_user(client->_client_user))
-            continue;
-        mess.add_param((*it).second._name);
-        sendMessageChannel(mess,(*it).second._name);
-        std::cerr<< "hna" <<std::endl;
+        if ((*it).second.get_user(client->_client_user.nickname))
+        {
+            (*it).second.remove_user(client->_client_user);
+            mess.add_param((*it).second._name);
+            sendMessageChannel(mess,(*it).second._name);
+            sendMessage(mess);
+            mess.clear_final();
+        }
         if (!(*it).second._users.size())
-            removeChannel((*it).second);
-        mess.clear_final();
+            {
+                it = channels.erase(it);
+            }
+        else
+            it++;
+            
     }
+    std::cout << "lhih" << std::endl;
     for (int i = 0; i < this->fds.size(); i++)
     {
         if (client->fd == this->fds[i].fd)
