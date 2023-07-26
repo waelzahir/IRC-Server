@@ -100,6 +100,7 @@ void Message::set_message_error(const std::string &error)
 {
 	_final_message.clear();
 	_final_message = error + "\r\n";
+	std::cout << _final_message << std::endl;
 }
 
 size_t Message::size()

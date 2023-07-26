@@ -6,35 +6,29 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 17:52:47 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 17:52:48 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 20:02:35 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "Commands.hpp"
 #include "Server.hpp"
-static	std::string nextToken(std::stringstream &stream)
-{
-	std::string token;
-	while (std::getline(stream, token, ' '))
-		if (token.length())
-			break ;
-	return token;
-} 
+
 void	Commands::pass(Client *client, std::stringstream &stream)
 {
-	std::string message;
+	Message err(*client, "PASS");
+	std::string token;
+	stream >> token;
 	if (client->_client_user.pass_auth.size())
 	{
-		message = ERR_ALREADYREGISTERED(this->_server->serverName, client->_client_user.nickname, "PASS");
-		send(client->fd, message.c_str(), message.length() , 0);
+		err.set_message_error(ERR_ALREADYREGISTERED(this->_server->serverName, client->_client_user.nickname, "PASS"));
+		_server->sendMessage_err(err);
 		return ;
 	}
-	std::string token = nextToken(stream);
 	if (!token.length())
 	{
-		message = ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "PASS");
-		send(client->fd, message.c_str(), message.length() , 0);
+		err.set_message_error(ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "PASS"));
+		_server->sendMessage_err(err);
 		return ;
 	}
 	if (token == this->_server->password)
@@ -43,7 +37,6 @@ void	Commands::pass(Client *client, std::stringstream &stream)
 		client->_client_user.activateAuth();
 		return ; 
 	}
-	message = ERR_PASSWDMISMATCH(this->_server->serverName, "*");
-	send(client->fd, message.c_str(), message.length() , 0);
-
+	err.set_message_error(ERR_PASSWDMISMATCH(this->_server->serverName, "*"));
+	_server->sendMessage_err(err);
 }

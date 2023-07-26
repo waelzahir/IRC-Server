@@ -6,13 +6,12 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 00:02:54 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 22:37:31 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 21:48:40 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Commands.hpp"
 #include "Server.hpp"
-#include "ReqParser.hpp"
 #include <netdb.h>
 
 
@@ -31,16 +30,18 @@ static void getBotEntry(Server *server ,std::string &def, std::string bot)
 }
 void	Commands::bot(Client *client, std::stringstream &stream)
 {
-    ReqParser parser(stream);
-    Message message(*client, "PRIVMSG", "IRCSERV.BOT");
-    message.set_param(client->_client_user.nickname);
+    std::string bot;
+    stream >> bot;
+    Message message(*client, "NOTICE", "BoredBot");
+    std::string name("BoredBot");
+    message.set_param(name);
     std::string def("Usage -> BOT bored");
-    if (parser.getStatus())
+    if (bot.length())
     {
-        std::pair<int, std::string> what = parser.getToken();
-        getBotEntry(_server, def, what.second);
+        getBotEntry(_server, def, bot);
     }
     message.set_trailing(def);
     _server->sendMessage(message, *client);
     message.clear_final();
+    std::cout <<"reach" << std::endl;
 }

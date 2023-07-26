@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 23:04:28 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:09:16 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,30 @@ Server::~Server()
     }
 }
 
-Server::Server(std::string pass, int port, int serial )
+Server::Server(std::string pass,std::string port, int serial)
 {
     std::stringstream serialto_str;
     std::string serial_str;
+    std::stringstream portstream;
+    int port_n;
     
-    // struct hostent *lh = gethostbyname("e3r11p2");
-
-    // if (lh)
-    //     std::cout << inet_ntoa(*(struct in_addr *)lh->h_addr) << std::endl;;
-    
-
+    if (!port.length() || port.length() > 5 || port[0] == '0')
+        throw std::string("invalid port");
+    for (int i = 0; i < port.length(); i++)
+    {
+        if (!isdigit(port[i]))
+             throw std::string("invalid port");
+    }
     serialto_str << serial;
     serialto_str >> serial_str;
-     
-    std::cout << "constructor " << pass << " on port "<< port << std::endl;
+    portstream << port;
+    portstream >> port_n;
+    if (port_n  > 65535)
+        throw std::string("invalid port");
     if (pass.length() < 2)  
-        throw "can't accept this password";
+        throw std::string("can't accept this password");
     this->password = pass;
-    this->port = port;
+    this->port = port_n;
     this->serverName = ":Ircsrvr" + serial_str + ".local";
     this->createSocket();
     this->makeNonBlockSocket();
@@ -51,7 +56,7 @@ Server::Server(std::string pass, int port, int serial )
     if (listen(this->listensocket, 5) == -1)
     {
         close(this->listensocket);
-        throw "listen error";
+        throw std::string("listen error");
     }
     this->fds.push_back((struct pollfd){this->listensocket, POLLIN, 0});
     setBotData(this->activities);
@@ -275,14 +280,14 @@ void    Server::createSocket()
 {
     this->listensocket = socket(AF_INET, SOCK_STREAM, 0);
     if (this->listensocket == -1)
-        throw "error creating socket";
+        throw std::string("error creating socket");
 }
 void    Server::makeNonBlockSocket()
 {
     if (fcntl(this->listensocket, F_SETFL, O_NONBLOCK) == -1)
     {
         close(this->listensocket);
-        throw "error fcntl";
+        throw std::string("error fcntl");
     }
 }
 void    Server::makePortReusable()
@@ -291,7 +296,7 @@ void    Server::makePortReusable()
     if (setsockopt(this->listensocket, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag)) == -1)
     {
         close(this->listensocket);
-        throw "setsockopt error";
+        throw std::string("setsockopt error");
     }
 }
 void    Server::goBindSocket()
@@ -304,7 +309,7 @@ void    Server::goBindSocket()
     if (bind(this->listensocket, (struct sockaddr *)&ad, sizeof(ad))==-1)
     {
         close(this->listensocket);
-        throw "bind error";
+        throw std::string("bind error");
     }
 }
 

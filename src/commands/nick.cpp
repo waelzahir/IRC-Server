@@ -6,14 +6,13 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 17:30:43 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 17:47:00 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 21:48:58 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "Commands.hpp"
 #include "Server.hpp"
-#include "ReqParser.hpp"
 
 
 static	std::string nextToken(std::stringstream &stream)
@@ -41,27 +40,29 @@ static	bool checkNickValidity(std::string &nick)
 }
 void	Commands::nick(Client *client, std::stringstream &stream)
 {
-	std::string token = nextToken(stream);
-	std::string message;
-	if (!token.length())
+	std::string nick;
+	Message err(*client, "NICK");
+	stream >> nick;
+	
+	if (!nick.length())
 	{
-		message = ERR_NONICKNAMEGIVEN(this->_server->serverName, "*");
-		send(client->fd, message.c_str(), message.length() , 0);
-			return ;
-	}
-	if (checkNickValidity(token))
-	{
-		message = ERR_ERRONEUSNICKNAME(this->_server->serverName, "*", token);
-		send(client->fd, message.c_str(), message.length() , 0);
+		err.set_message_error(ERR_NONICKNAMEGIVEN(this->_server->serverName, "*"));
+		_server->sendMessage_err(err);
 		return ;
 	}
-	if (this->_server->checkNick(token, client))
+	if (checkNickValidity(nick))
 	{
-		message = ERR_NICKNAMEINUSE(this->_server->serverName, "*", token);
-		send(client->fd, message.c_str(), message.length() , 0);
+		err.set_message_error(ERR_ERRONEUSNICKNAME(this->_server->serverName, "*", nick));
+		_server->sendMessage_err(err);
 		return ;
 	}
-	this->_server->nickmak.insert(std::make_pair(token, client));
-	client->_client_user.nickname = token;
+	if (this->_server->checkNick(nick, client))
+	{
+		err.set_message_error(ERR_NICKNAMEINUSE(this->_server->serverName, "*", nick));
+		_server->sendMessage_err(err);
+		return ;
+	}
+	this->_server->nickmak.insert(std::make_pair(nick, client));
+	client->_client_user.nickname = nick;
 	client->_client_user.activateAuth();
 }

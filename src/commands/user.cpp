@@ -1,25 +1,34 @@
 #include "Commands.hpp"
-#include "ReqParser.hpp"
 #include "Server.hpp"
 
 
 void	Commands::user(Client *client, std::stringstream &stream)
 {
-	ReqParser	parser(stream);
+	Message	err(*client, "USER");
+	std::string user;
+	std::string filler;
+	int i = 0;
+	stream >> user;
 	std::string message;
+
+	while (!stream.eof())
+	{
+		stream >> filler;
+		std::cout << i << " " << filler<<std::endl;
+		i++;
+	}
+	if (i < 3)
+	{
+		err.set_message_error(ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "USER"));
+		_server->sendMessage_err(err);
+		return ;
+	}
 	if (client->_client_user.username.size())
 	{
-		message = ERR_ALREADYREGISTERED(this->_server->serverName, client->_client_user.nickname, std::string("USER"));
-		send(client->fd, message.c_str(), message.length() , 0);
+		err.set_message_error(ERR_ALREADYREGISTERED(this->_server->serverName, client->_client_user.nickname, "USER"));
+		_server->sendMessage_err(err);
 		return ;
 	}
-	if (parser.getStatus() < 4)
-	{
-		message = ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "USER");
-		send(client->fd, message.c_str(), message.length() , 0);
-		return ;
-	}
-	std::pair<int, std::string> tpair = parser.getToken();
-	client->_client_user.username = tpair.second;
+	client->_client_user.username = user;
 	client->_client_user.activateAuth();
 }
