@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 21:45:24 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 22:34:17 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,19 @@ Server::Server(std::string pass,std::string port, int serial)
     std::stringstream portstream;
     int port_n;
     
-    // if (port parse)
-    // {
-        
-    // }
+    if (!port.length() || port.length() > 5 || port[0] == '0')
+        throw std::string("invalid port");
+    for (int i = 0; i < port.length(); i++)
+    {
+        if (!isdigit(port[i]))
+             throw std::string("invalid port");
+    }
     serialto_str << serial;
     serialto_str >> serial_str;
     portstream << port;
     portstream >> port_n;
+    if (port_n  > 65535)
+        throw std::string("invalid port");
     if (pass.length() < 2)  
         throw std::string("can't accept this password");
     this->password = pass;
