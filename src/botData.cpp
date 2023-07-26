@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 22:27:45 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/24 22:29:51 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 20:35:04 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void setBotData(std::vector<std::string> &activities)
     activities.push_back("Improve your touch typing");
     activities.push_back("Invite some friends over for a game night");
     activities.push_back("Khra ltanjawa flap7ar");
-    activities.push_back("Khwar bnadem fz7am");
     activities.push_back("Learn Express.js");
     activities.push_back("Learn GraphQL");
     activities.push_back("Learn Javascript");
@@ -160,7 +159,6 @@ void setBotData(std::vector<std::string> &activities)
     activities.push_back("Prepare a 72-hour kit");
     activities.push_back("Prepare a dish from a foreign culture");
     activities.push_back("Pull a harmless prank on one of your friends");
-    activities.push_back("Qleb 3la li y7wik");
     activities.push_back("Read a formal research paper on an interesting subject");
     activities.push_back("Rearrange and organize your room");
     activities.push_back("Repaint a room in your house");
@@ -190,7 +188,6 @@ void setBotData(std::vector<std::string> &activities)
     activities.push_back("Teach your dog a new trick");
     activities.push_back("Text a friend you haven't talked to in a long time");
     activities.push_back("Think of a new business idea");
-    activities.push_back("Trach swa dtaha");
     activities.push_back("Try a food you don't like");
     activities.push_back("Uninstall unused apps from your devices");
     activities.push_back("Visit a nearby museum");

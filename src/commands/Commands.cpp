@@ -46,10 +46,10 @@ void	Commands::execute(Client *client, std::string Command)
 	void  (Commands::*ptr)(Client*, std::stringstream&) = this->getCommand(name);
 	if ((!authMethods(name) && !client->_client_user.connected ) || ptr == NULL)
 	{
-		std::string message;
-		(client->_client_user.connected) ? message = ERR_UNKNOWNCOMMAND(this->_server->serverName, client->_client_user.nickname, name):
-		message = ERR_NOTREGISTERED(this->_server->serverName, name);
-		send(client->fd, message.c_str(), message.length(), 0);
+		Message err(*client, "");
+		(client->_client_user.connected) ?  err.set_message_error(ERR_UNKNOWNCOMMAND(this->_server->serverName, client->_client_user.nickname, name)) :
+		 err.set_message_error(ERR_NOTREGISTERED(this->_server->serverName, name));
+		_server->sendMessage_err(err);
 		return ;
 	}
 	(this->*ptr)(client, strm);
@@ -80,10 +80,6 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["PING"] = &Commands::ping;
 	commands["BOT"] = &Commands::bot;
 	commands["PART"] = &Commands::part;
-
-
-
-
 
 	try
 	{

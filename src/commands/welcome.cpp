@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   welcome.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:55:44 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/18 09:08:09 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 20:29:41 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void	Commands::welcome(Client *client, std::stringstream &stream)
     send(client->fd, message.c_str(), message.length(), 0);
     message = RPL_ISUPPORT(this->_server->serverName, client->_client_user.nickname );
     send(client->fd, message.c_str(), message.length(), 0);
-
 }
