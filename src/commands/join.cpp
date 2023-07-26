@@ -36,9 +36,13 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 {
 
 	std::map<std::string, Channel>::iterator it = channels.find(channel._name); 
-	if (((*it).second).get_mode_status(I_MODE) && ((*it).second).inveted.find(message._sender._client_user.nickname) == ((*it).second).inveted.end() )
+	if (((*it).second).get_mode_status(I_MODE) )
 	{
-		throw std::string("not invited");
+		std::set<std::string>::iterator itt = ((*it).second).inveted.find(message._sender._client_user.nickname);
+		if(itt == ((*it).second).inveted.end() )
+			throw std::string("not invited");
+		else
+			((*it).second).inveted.erase(itt);
 	}
 	if (((*it).second).get_mode_status(L_MODE) && ((*it).second)._users.size() >= ((*it).second)._user_limit)
 	{
@@ -48,17 +52,33 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 	
 	if (status == 1) // key invalid
 		throw std::string("key invalid");
-	else if (status == 2) // user already in channel
+	else if (status == 2)
 		throw std::string("user already in channel");
 	return (*it).second;
 }
 
+static bool check_channel_name(std::string& channel)
+{
+	if (channel.empty())
+		return false;
+	if (channel[0] != '#' && channel[0] != '&')
+		return false;
+	std::string::iterator it;
+
+	for (it =  channel.begin() + 1 ; it != channel.end() ; it++)
+	{
+		if (!isalpha(*it) && !isalnum(*it))
+			return false;
+	}
+	return true;
+}
 void Commands::join(Client *client, std::stringstream &_stream)
 {
 
 	std::queue<std::pair<std::string, std::string> > channells;
 	channells = get_channels_key(_stream);
 	Message message(*client, "JOIN", client->_client_user.nickname + "!" + client->_client_user.username + "@" + client->host);
+	int sts = -1;
 
 	// Message message(*client,"JOIN",client->_client_user.nickname);
 	if (!channells.size())
@@ -72,9 +92,12 @@ void Commands::join(Client *client, std::stringstream &_stream)
 		Channel new_channel(channells.front().first);
 		// new_channel._owner = &client->_client_user;
 		new_channel._key = channells.front().second;
-		int sts = _server->createChannel(new_channel);
+		if (check_channel_name(channells.front().first))
+			sts = _server->createChannel(new_channel);
 		try
 		{
+			if (!check_channel_name(channells.front().first))
+				throw std::string("invalid name of channnel");
 			Channel &channel = find_channel_add_user(new_channel, _server->channels, message);
 			if (!channel._key.empty())
 				channel.set_mode(K_MODE);
@@ -84,6 +107,7 @@ void Commands::join(Client *client, std::stringstream &_stream)
 			{
 				message.clear_final();
 				channel._users.at(0).owner = 1; 
+				channel._topic_seter = client->_client_user.nickname; 
 				// channel not exist
 			}
 			else
@@ -119,10 +143,11 @@ void Commands::join(Client *client, std::stringstream &_stream)
 				message.set_message_error(ERR_CHANNELISFULL(_server->serverName, client->_client_user.nickname ,new_channel._name));
 				_server->sendMessage_err(message);
 			}
-			// else if (e == "user already in channel")
-			// {
-			// 	// do nothing
-			// }
+			else if (e == "invalid name of channnel")
+			{
+				message.set_message_error(ERR_BADCHANNAME(_server->serverName, client->_client_user.nickname ,new_channel._name));
+				_server->sendMessage_err(message);
+			}
 		}
 		channells.pop();
 	}

@@ -34,16 +34,17 @@ public:
 	void	nick(Client *client, std::stringstream &stream);
 	void	user(Client *client, std::stringstream &stream);
 	void	mode(Client *client, std::stringstream &stream);
+	void	topic(Client *client, std::stringstream &stream);
 	void	join(Client *client, std::stringstream &stream);
 	void	who(Client *client, std::stringstream &stream);
 	void	kick(Client *client, std::stringstream &stream);
+	void	invite(Client *client, std::stringstream &stream);
 	void	part(Client *client, std::stringstream &stream);
 	void	privmsg(Client *client, std::stringstream &stream);
 	void	notice(Client *client, std::stringstream &stream);
 	void	quit(Client *client, std::stringstream &stream);
 	void	welcome(Client *client, std::stringstream &stream);
 	void	ping(Client *client, std::stringstream &stream);
-
 	void	bot(Client *client, std::stringstream &stream);
 
 	

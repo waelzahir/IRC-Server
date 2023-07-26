@@ -35,7 +35,6 @@
 # define ERR_NICKCOLLISION(client, nick, user, host) client + " " + nick + " ::Nickname collision KILL from " + user + "@" + host // wont be used
 
 // channel
-# define RPL_TOPIC(server, client, channel, topic)  server + " 332 " + client + " " + channel + " : " + topic 
 # define RPL_NAMREPLY(server, client, channel, nick)  server + " 353 " + client +  " @ "+ channel +" :" + nick
 # define RPL_ENDOFNAMES(server, client, channel)  server + " 366 " + client +  " "+ channel + " :End of /NAMES list."
 # define ERR_BADCHANNELKEY(server, client, channel)  server + " 475 " + client +  " "+ channel + " :Cannot join channel (+k)"
@@ -44,11 +43,17 @@
 # define ERR_NOSUCHCHANNEL(server, client, channel)  server + " 403 " + client +  " "+ channel + " :No such channel"
 # define ERR_UMODEUNKNOWNFLAG(server, client)  server + " 501 " + client + " :Unknown MODE flag"
 # define RPL_CHANNELMODEIS(server, client, channel,op, param)  ":" + server + " 324 " + client +  " " + channel +  " " + op  + param
+# define RPL_TOPIC(server, client, channel, topic)  server + " 332 " + client + " " + channel + " : " + topic 
+# define RPL_TOPICWHOTIME(server, client, channel, nick, state)  server + " 333 " + client + " " + channel + " " + nick + " " + state 
+# define RPL_NOTOPIC(server, client, channel)  server + " 331 " + client + " " + channel + " : No topic is set" 
 
 // channel mode
 # define ERR_CHANOPRIVSNEEDED(server, client, channel)  server + " 482 " + client +  " "+ channel + " : :You're not channel operator"
 # define RPL_CREATIONTIME(server, client, channel, timee)  server + " 329 " + client +  " "+ channel + " " + timee
 # define ERR_USERNOTINCHANNEL(server, client, nick , channel)  server + " 441 " + client + " " + nick + " " + channel + " :They aren't on that channel"
-# define  ERR_NOTONCHANNEL(server, client , channel)   server + " 442 " + client  + " " + channel + " :You're not on that channel"
+# define ERR_NOTONCHANNEL(server, client , channel)   server + " 442 " + client  + " " + channel + " :You're not on that channel"
+# define ERR_BADCHANNAME(server, client, channel)  server + " 479 " + client +  " "+ channel + " : :Illegal channel name start with # or &"
+# define RPL_INVITING(server, client, channel, nick)  server + " 341 " + client + " " + nick + " " + channel 
+# define ERR_USERONCHANNEL(server, client , nick, channel)   server + " 443 " + client  + " " + nick + " " + channel +" :is already on channel"
 
 #endif

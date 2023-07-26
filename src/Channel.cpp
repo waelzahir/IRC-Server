@@ -6,11 +6,10 @@ Channel::Channel()
 
 	// std::cout << "Channel Constructor called" << std::endl;
 }
-Channel::Channel(std::string name) : _name(name) , mode(0), _key("") , _topic("This is my cool channel!")
+Channel::Channel(std::string name) : _name(name) , mode(0), _key("") , _topic("")
 {
 	_user_limit = -1;
 	std::time_t currentTime = std::time(NULL);
-	currentTime += 10;
     std::stringstream ss;
     ss << currentTime;
     _create_time = ss.str();
@@ -33,6 +32,9 @@ Channel&   Channel::operator=(Channel const & other )
 	this->_name  = other._name;
 	this->_key   = other._key;
 	this->_users = other._users;
+	this->_topic_time = other._topic_time;
+	this->_topic = other._topic;
+	this->_topic_seter = other._topic_seter;
 	_user_limit = other._user_limit;
 	_topic  = other._topic;
 	inveted = other.inveted;

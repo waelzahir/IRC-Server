@@ -99,8 +99,8 @@ std::string Commands::mode_o(Channel &channel, User &user, const std::string &st
 	return "";
 }
 static bool check_number(std::string str) {
-	for (int i = 0; i < str.length(); i++)
-		if (isdigit(str[i]) == false)
+	for (int i = 0; i < str[i]; i++)
+		if (!isdigit(str[i]))
     		return false;
     return true;
 }
@@ -111,7 +111,6 @@ std::string Commands::mode_l(Channel &channel, User &user, const std::string &st
 		throw std::string("ERR_CHANOPRIVSNEEDED");
 	if (sign == '-' && channel.get_mode_status(L_MODE))
 	{
-		std::cout << "sign : " << sign << " str |" << str << "|" << std::endl;  
 		channel.unset_mode(L_MODE);
 		channel._user_limit = -1;
 		msg_tmp->clear_final();
@@ -122,6 +121,7 @@ std::string Commands::mode_l(Channel &channel, User &user, const std::string &st
 	}
 	else if (sign == '+')
 	{
+		std::cout << "sign : " << sign << " str |" << str << "|" << std::endl;  
 		if (!check_number(str))
 			return "";
 		if (str.empty())

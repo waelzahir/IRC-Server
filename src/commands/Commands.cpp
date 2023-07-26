@@ -73,12 +73,14 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["MODE"] = &Commands::mode;
 	commands["KICK"] = &Commands::kick;
 	commands["JOIN"] = &Commands::join;
+	commands["INVITE"] = &Commands::invite;
 	commands["WHO"] = &Commands::who;
 	commands["PRIVMSG"] = &Commands::privmsg;
 	commands["NOTICE"] = &Commands::notice;
 	commands["QUIT"] = &Commands::quit;
 	commands["PING"] = &Commands::ping;
 	commands["BOT"] = &Commands::bot;
+	commands["TOPIC"] = &Commands::topic;
 	commands["PART"] = &Commands::part;
 
 

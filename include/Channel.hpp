@@ -21,7 +21,10 @@ public:
 	std::set<std::string>	inveted;
 	int						_user_limit;
 	std::string				_topic;
+	std::string				_topic_seter;
+	std::time_t				_topic_time;
 	std::string				_create_time;
+
 
 	Channel();
 	Channel(std::string);

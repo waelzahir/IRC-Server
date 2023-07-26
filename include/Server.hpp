@@ -6,7 +6,7 @@
 /*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/25 19:57:53 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 22:58:54 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ class Server
         void    sendMessage_user(Message &message, std::string &nickname,  const Channel& channel); /* this method broadcast message to every client*/
         void    sendMessage(Message& message, const Client &cl); /* this method broadcast message to every client*/
         void    sendMessageChannel(Message& message, std::string channel); /* this method broadcast message to every client*/
+        void    sendMessageChannel_err(Message& message, std::string channel); /* this method broadcast message to every client*/
         void    sendMessageALL(Message& message); /* this method broadcast message to every client*/
         bool    checkNick(std::string &nick, Client *client);
         std::string serverName; /*wht not server name ??*/

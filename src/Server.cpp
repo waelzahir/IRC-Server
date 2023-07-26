@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 04:25:18 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 23:04:28 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,14 +147,13 @@ void    Server::removeClient(Client *client)
             mess.clear_final();
         }
         if (!(*it).second._users.size())
-            {
-                it = channels.erase(it);
+        {
+            // it = channels.erase(it);
 
-                std::cout <<"gone" << std::endl;
-            }
+            std::cout <<"gone" << std::endl;
+        }
         else
             it++;
-            
     }
     std::cout << "lhih" << std::endl;
     for (int i = 0; i < this->fds.size(); i++)
@@ -216,6 +215,7 @@ void    Server::sendMessageALL(Message& message) /* this method broadcast messag
         send((*it).second->fd, message._final_message.c_str(), message.size(),0);
     }
 }
+
 void    Server::sendMessageChannel(Message& message, std::string channel)
 {
     std::vector<User>::iterator it;
@@ -225,6 +225,30 @@ void    Server::sendMessageChannel(Message& message, std::string channel)
         std::vector<User>&users = channels.at(channel)._users;
         /* code */
         message.set_message();
+        for (it  = users.begin(); it != users.end(); it++)
+        {
+            if ((*it).nickname != message._sender._client_user.nickname)
+                sendMessage_user(message,(*it).nickname, channels.at(channel));
+        }
+    }
+    catch(const std::exception& e)
+    {
+        message.set_message_error(ERR_NOSUCHNICK(this->serverName, message._sender._client_user.nickname, channel));
+        this->sendMessage_err(message);
+        // channel not found
+    }
+}
+
+
+
+void    Server::sendMessageChannel_err(Message& message, std::string channel)
+{
+    std::vector<User>::iterator it;
+
+    try
+    {
+        std::vector<User>&users = channels.at(channel)._users;
+        /* code */
         for (it  = users.begin(); it != users.end(); it++)
         {
             if ((*it).nickname != message._sender._client_user.nickname)
