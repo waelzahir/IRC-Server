@@ -49,7 +49,7 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 	if (status == 1) // key invalid
 		throw std::string("key invalid");
 	else if (status == 2) // user already in channel
-		;// throw "user already in channel";
+		throw std::string("user already in channel");
 	return (*it).second;
 }
 
@@ -103,7 +103,7 @@ void Commands::join(Client *client, std::stringstream &_stream)
 		}
 		catch(std::string& e)
 		{
-			
+			std::cout << e <<std::endl;
 			if (e == "key invalid")
 			{
 				message.set_message_error(ERR_BADCHANNELKEY(_server->serverName,client->_client_user.nickname ,new_channel._name));
@@ -119,6 +119,10 @@ void Commands::join(Client *client, std::stringstream &_stream)
 				message.set_message_error(ERR_CHANNELISFULL(_server->serverName, client->_client_user.nickname ,new_channel._name));
 				_server->sendMessage_err(message);
 			}
+			// else if (e == "user already in channel")
+			// {
+			// 	// do nothing
+			// }
 		}
 		channells.pop();
 	}

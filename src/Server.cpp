@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 03:10:30 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/26 04:25:18 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ void    Server::removeClient(Client *client)
         if (!(*it).second._users.size())
             {
                 it = channels.erase(it);
+
+                std::cout <<"gone" << std::endl;
             }
         else
             it++;
