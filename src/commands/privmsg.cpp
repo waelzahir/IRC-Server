@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/27 02:39:53 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/27 04:05:21 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
             message.set_trailing(all);
             try
             {    
+                if (!(this->_server->nickmak.at(dest))->_client_user.connected)
+                    throw std::exception();
                 _server->sendMessage(message, *this->_server->nickmak.at(dest));
                 message.clear_final();
             }

@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 20:55:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/27 01:52:32 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 04:05:16 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void Commands::notice(Client *client, std::stringstream &stream)
             {
                 message.set_param(dest);
                 message.set_trailing(msg);
+                if (!(this->_server->nickmak.at(dest))->_client_user.connected)
+                    throw std::exception();
                 _server->sendMessage(message, *this->_server->nickmak.at(dest));
                 message.clear_final();
             }

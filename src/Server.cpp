@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/27 03:22:09 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/27 04:10:05 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int Server::createChannel(Channel &channel)
     it = channels.find(channel._name);
     if (it != channels.end())
     {
-        std::cerr << "create channel: channel exist" << std::endl;
         return 1;
     }
     this->channels.insert(std::make_pair(channel._name, channel));
