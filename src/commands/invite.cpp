@@ -10,16 +10,10 @@ void Commands::	invite(Client *client, std::stringstream &_stream)
 	std::string channel;
 	std::string append;
 
-
 	_stream >> nickname;
 	_stream >> channel;
-	if (!channel.empty() && channel[0] == ':')
-	{
-		getline( _stream, append);
-		channel = channel + append;
-	}
-	
 
+	std::cout << "channeeeeeeel :" << channel << std::endl;
 	try
 	{
 		Channel &ch = check_channel(channel);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 23:49:14 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 01:08:42 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void    Server::removeClient(Client *client)
         }
         if (!(*it).second._users.size())
         {
-            it = channels.erase(it);
+             channels.erase(it);
 
             std::cout <<"gone" << std::endl;
         }
