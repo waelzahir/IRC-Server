@@ -1,3 +1,4 @@
 **/*.o
 lastcompiled.log
 ircserv
+.vscode
