@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 00:02:34 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 21:49:26 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 01:53:49 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,16 @@ void	Commands::part(Client *client, std::stringstream &stream)
 	    Message err(*client, "PART");
    		std::stringstream channels;
         std::string msg;
+        std::string buffer; 
+
         stream >> channels;
-        stream >> msg;
+        while (!stream.eof())
+        {
+            stream >> buffer;
+            msg += buffer + " ";
+        }
+        if (msg.length() && msg[0] == ':')
+            msg.erase(0,1);
         while (!channels.eof())
         {
 

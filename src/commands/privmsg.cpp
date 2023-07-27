@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/27 00:56:40 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 01:38:03 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
     while (!stream.eof())
     {
         stream >> msg;
+        if (msg.length())
         all +=  msg + " " ;
     }
+    if (all.length() && all[0] == ':')
+        all.erase(0,1);
         
     if (!destinations.str().length())
     {
