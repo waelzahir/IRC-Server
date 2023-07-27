@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 20:55:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 21:49:13 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 01:52:32 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,16 @@ static bool isChannel(std::string name)
 void Commands::notice(Client *client, std::stringstream &stream)
 {
     std::stringstream destinations;
+    std::string buffer; 
     std::string msg;
     stream >> destinations;
-    stream >> msg;
+    while (!stream.eof())
+    {
+        stream >> buffer;
+        msg += buffer + " ";
+    }
+    if (msg.length() && msg[0] == ':')
+        msg.erase(0,1);
     while (!destinations.eof())
     {
         Message message(*client, "NOTICE", client->_client_user.nickname + "!" + client->_client_user.username + "@" + client->host);
