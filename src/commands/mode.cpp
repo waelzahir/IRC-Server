@@ -1,15 +1,7 @@
 #include "Commands.hpp"
 
 
-static std::stringstream &operator>>(std::stringstream &src, std::stringstream &dst)
-{
-	std::string temp;
 
-	src >> temp;
-	dst << temp;
-	
-	return dst;
-}
 
 static std::string extract_token(std::stringstream &src)
 {
@@ -101,7 +93,6 @@ Channel& Commands::check_channel(std::string &channel)
 	{
 		throw std::string("ERR_NOSUCHCHANNEL");
 	}
-	std::cout << "channe exist" << std::endl ; 
 	return (*it).second;
 }
 
@@ -117,7 +108,7 @@ void check_modestring(std::string &op)
 	std::string ops = "oiktl+-";
 	for (int i = 1; op[i] ; i++)
 	{
-		if ((op.at(i) == '-' || op.at(i) == '+') && (i == size - 1 || !isalpha(op.at(i + 1))))
+		if ((op.at(i) == '-' || op.at(i) == '+') && (i == (int)size - 1 || !isalpha(op.at(i + 1))))
 			throw std::string("RPL_CHANNELMODEIS");
 		if (ops.find(op.at(i)) == ops.npos)
 			throw std::string("RPL_CHANNELMODEIS");
@@ -193,7 +184,6 @@ void	Commands::mode(Client *client, std::stringstream &stream)
 
 	stream >> channel;
 	
-	std::cout << stream.str() << std::endl;
 	try
 	{
 		Channel& ch = check_channel(channel);

@@ -28,7 +28,6 @@ void Commands::kick(Client *client, std::stringstream &_stream)
 {
 	std::string channel;
 	std::string msg;
-	int i = 0;
 	User *c_user;
 	_stream >> channel;
 	Message message(*client,"KICK", client->_client_user.nickname);
@@ -50,7 +49,6 @@ void Commands::kick(Client *client, std::stringstream &_stream)
 				c_user = ch.get_user(user);
 				if (c_user == NULL)
 					throw std::string("ERR_USERNOTINCHANNEL");
-				std::cout << "c_user : " << user << std::endl;
 				message.add_param_space(channel);
 				message.add_param_space(user);
 				if (!msg.empty())

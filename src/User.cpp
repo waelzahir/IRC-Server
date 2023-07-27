@@ -1,13 +1,17 @@
 #include "User.hpp"
 
+// int 		connected;
+// 	int 		welcomed;
+// 	int 		owner;
+// 	std::string username;
+// 	std::string nickname;
+// 	std::string pass_auth;
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
-User::User(): connected(0), welcomed(1), owner(-1)
+User::User(): connected(0), welcomed(1), owner(-1), username(""), nickname(""), pass_auth("")
 {
-	// std::cout << "User Constructor called" << std::endl;
 }
-User::User(std::string _u, std::string _n) : username(_u), nickname(_n), owner(-1)
+User::User(std::string _u, std::string _n) :connected(0), welcomed(1), owner(-1),  username(_u), nickname(_n), pass_auth("")
 {
-	// std::cout << "User paramitrized Constructor called" << std::endl;
 }
 
 User::User(const User &other)
@@ -18,7 +22,6 @@ User::User(const User &other)
 /*** -------------------------------- DESTRUCTOR --------------------------------*/
 User::~User()
 {
-	// std::cout << "User Destructor called : " << this->username << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/

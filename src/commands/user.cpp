@@ -14,10 +14,9 @@ void	Commands::user(Client *client, std::stringstream &stream)
 	while (!stream.eof())
 	{
 		stream >> filler;
-		std::cout << i << " " << filler<<std::endl;
 		i++;
 	}
-	if (i < 4)
+	if (i < 3)
 	{
 		err.set_message_error(ERR_NEEDMOREPARAMS(this->_server->serverName, "*", "USER"));
 		_server->sendMessage_err(err);

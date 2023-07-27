@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   welcome.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 16:55:44 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 20:29:41 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 02:59:35 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ std::string to_string(int nb)
 
 void	Commands::welcome(Client *client, std::stringstream &stream)
 {
+    (void)stream;
     std::string message;
     message = RPL_WELCOME(this->_server->serverName, client->_client_user.nickname);
     send(client->fd, message.c_str(), message.length(), 0);

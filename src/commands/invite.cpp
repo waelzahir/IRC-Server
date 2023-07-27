@@ -13,7 +13,6 @@ void Commands::	invite(Client *client, std::stringstream &_stream)
 	_stream >> nickname;
 	_stream >> channel;
 
-	std::cout << "channeeeeeeel :" << channel << std::endl;
 	try
 	{
 		Channel &ch = check_channel(channel);

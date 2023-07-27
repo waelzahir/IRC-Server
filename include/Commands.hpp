@@ -44,7 +44,6 @@ public:
 	void	notice(Client *client, std::stringstream &stream);
 	void	quit(Client *client, std::stringstream &stream);
 	void	welcome(Client *client, std::stringstream &stream);
-	void	ping(Client *client, std::stringstream &stream);
 	void	bot(Client *client, std::stringstream &stream);
 
 	

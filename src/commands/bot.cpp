@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bot.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 00:02:54 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 21:48:40 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 02:43:40 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ void	Commands::bot(Client *client, std::stringstream &stream)
     message.set_trailing(def);
     _server->sendMessage(message, *client);
     message.clear_final();
-    std::cout <<"reach" << std::endl;
 }

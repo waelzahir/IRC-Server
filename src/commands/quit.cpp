@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 21:13:46 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/27 01:54:35 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 03:19:50 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	Commands::quit(Client *client, std::stringstream &stream)
     if (reason.length())
         message.set_trailing(reason);
     _server->sendMessage(message, *client);
-    close(client->fd);
     _server->removeClient(client);
     message.clear_final();
+    throw std::string();
 }

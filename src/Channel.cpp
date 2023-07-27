@@ -4,7 +4,6 @@
 Channel::Channel()
 {
 
-	// std::cout << "Channel Constructor called" << std::endl;
 }
 Channel::Channel(std::string name) : _name(name) , mode(0), _key("") , _topic("")
 {
@@ -23,7 +22,6 @@ Channel::Channel(const Channel &other)
 /*** -------------------------------- DESTRUCTOR --------------------------------*/
 Channel::~Channel()
 {
-	// std::cout << "Channel Destructor called" << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/

@@ -35,7 +35,6 @@ void Commands::topic(Client *client, std::stringstream &_stream)
 		}
 		topic_msg.erase(0,1);
 		ch._topic = topic_msg;
-		std::cout << topic_msg <<std::endl;
 		ch._topic_seter = client->_client_user.nickname;
 		ch._topic_time =  std::time(NULL);
 		message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,channel, ch._topic));

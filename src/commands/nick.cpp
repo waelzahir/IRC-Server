@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nick.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 17:30:43 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/27 00:43:08 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 02:56:56 by tel-mouh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,14 @@
 #include "Server.hpp"
 
 
-static	std::string nextToken(std::stringstream &stream)
-{
-	std::string token;
-	while (std::getline(stream, token, ' '))
-		if (token.length())
-			break ;
-	return token;
-} 
+
 static bool otherCharExeptions(char	c)
 {
 	return (c == '{' || c == '}' || c == '[' || c == ']' || c == '|' || c == '_');	
 }
 static	bool checkNickValidity(std::string &nick)
 {
-	for (int i = 0; i < nick.length(); i++)
+	for (std::size_t i = 0; i < nick.length(); i++)
 	{
 		if (!isalpha(nick[i]) && !isdigit(nick[i]) && !otherCharExeptions(nick[i]))
 			return 1;

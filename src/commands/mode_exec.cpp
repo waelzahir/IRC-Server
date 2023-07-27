@@ -121,7 +121,6 @@ std::string Commands::mode_l(Channel &channel, User &user, const std::string &st
 	}
 	else if (sign == '+')
 	{
-		std::cout << "sign : " << sign << " str |" << str << "|" << std::endl;  
 		if (!check_number(str))
 			return "";
 		if (str.empty())

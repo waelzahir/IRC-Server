@@ -3,7 +3,6 @@
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
 IrcSystem::IrcSystem()
 {
-	std::cout << "IrcSystem Constructor called" << std::endl;
 }
 
 IrcSystem::IrcSystem(const IrcSystem &other)
@@ -15,7 +14,6 @@ IrcSystem::IrcSystem(const IrcSystem &other)
 IrcSystem::~IrcSystem()
 {
 	// delete server;
-	std::cout << "IrcSystem Destructor called" << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/

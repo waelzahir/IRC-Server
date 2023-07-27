@@ -3,11 +3,9 @@
 /*** ------------------------------- CONSTRUCTOR --------------------------------*/
 Commands::Commands() 
 {
-	// std::cout << "Commands Constructor called" << std::endl;
 }
 Commands::Commands(Server *__server) : _server(__server)
 {
-	// std::cout << "Commands Constructor called" << std::endl;
 }
 
 Commands::Commands(const Commands &other)
@@ -18,7 +16,6 @@ Commands::Commands(const Commands &other)
 /*** -------------------------------- DESTRUCTOR --------------------------------*/
 Commands::~Commands()
 {
-	// std::cout << "Commands Destructor called" << std::endl;
 }
 
 /*** --------------------------------- OVERLOAD ---------------------------------*/
@@ -40,6 +37,7 @@ void	Commands::execute(Client *client, std::string Command)
 		return ;
 	std::stringstream strm(Command);
 	std::string name;
+	std::string name_client = client->_client_user.nickname;
 	if (!std::getline(strm, name, ' '))
 		return ;
 	
@@ -52,12 +50,21 @@ void	Commands::execute(Client *client, std::string Command)
 		_server->sendMessage_err(err);
 		return ;
 	}
-	(this->*ptr)(client, strm);
-	if (client->_client_user.connected && client->_client_user.welcomed)
+	try
 	{
-		client->_client_user.welcomed = 0;
-		this->welcome(client, strm);
+		(this->*ptr)(client, strm);
+		
+		if (client->_client_user.connected && client->_client_user.welcomed)
+		{
+			client->_client_user.welcomed = 0;
+			this->welcome(client, strm);
+		}
+		
 	}
+	catch(std::string &e)
+	{
+	}
+	
 
 }
 void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::stringstream&)
@@ -78,7 +85,6 @@ void    (Commands::*Commands::getCommand(std::string funcname)) (Client*, std::s
 	commands["PRIVMSG"] = &Commands::privmsg;
 	commands["NOTICE"] = &Commands::notice;
 	commands["QUIT"] = &Commands::quit;
-	commands["PING"] = &Commands::ping;
 	commands["BOT"] = &Commands::bot;
 	commands["TOPIC"] = &Commands::topic;
 	commands["PART"] = &Commands::part;

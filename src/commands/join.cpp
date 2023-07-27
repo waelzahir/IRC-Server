@@ -44,7 +44,7 @@ Channel& find_channel_add_user(Channel &channel, std::map<std::string, Channel> 
 		else
 			((*it).second).inveted.erase(itt);
 	}
-	if (((*it).second).get_mode_status(L_MODE) && ((*it).second)._users.size() >= ((*it).second)._user_limit)
+	if (((*it).second).get_mode_status(L_MODE) && (int)((*it).second)._users.size() >= ((*it).second)._user_limit)
 	{
 		throw std::string("limits");
 	}
@@ -113,10 +113,8 @@ void Commands::join(Client *client, std::stringstream &_stream)
 			else
 				_server->sendMessageChannel(message, channel._name);
 			message.set_message_error(RPL_CREATIONTIME(_server->serverName, client->_client_user.nickname ,channel._name, "222"));
-			std::cout << "|" <<message._final_message << "|" << std::endl;
 			_server->sendMessage_err(message);
 			message.set_message_error(RPL_CHANNELMODEIS(_server->serverName, client->_client_user.nickname ,channel._name, "+o",""));
-			std::cout << "|" <<message._final_message << "|" << std::endl;
 			_server->sendMessage_err(message);
 			message.set_message_error(RPL_TOPIC(_server->serverName,client->_client_user.nickname ,new_channel._name, channel._topic));
 			_server->sendMessage_err(message);
@@ -127,7 +125,6 @@ void Commands::join(Client *client, std::stringstream &_stream)
 		}
 		catch(std::string& e)
 		{
-			std::cout << e <<std::endl;
 			if (e == "key invalid")
 			{
 				message.set_message_error(ERR_BADCHANNELKEY(_server->serverName,client->_client_user.nickname ,new_channel._name));
