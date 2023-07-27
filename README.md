@@ -28,7 +28,7 @@ The project will be divided into the following main components:
 
 ## Usage
 
-[./ircserver <port> <password>]
+[make && ./ircserver <port> <password>]
 
 ## Contributing
 
