@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tel-mouh <tel-mouh@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:36 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 23:09:16 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:49:14 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ Server::Server(std::string pass,std::string port, int serial)
     std::stringstream serialto_str;
     std::string serial_str;
     std::stringstream portstream;
+
     int port_n;
     
     if (!port.length() || port.length() > 5 || port[0] == '0')
@@ -153,7 +154,7 @@ void    Server::removeClient(Client *client)
         }
         if (!(*it).second._users.size())
         {
-            // it = channels.erase(it);
+            it = channels.erase(it);
 
             std::cout <<"gone" << std::endl;
         }
@@ -400,6 +401,7 @@ void    Server::pushToQueue(int fd)
         std::string full = client->messages.substr(0, pos);
         this->Mqueue.push(make_pair(fd, full));
         client->messages.erase(0, pos+2);
+        std::cout << "command :" << full << "\n" << "who: " << client->_client_user.nickname << std::endl;
     }
 }
 

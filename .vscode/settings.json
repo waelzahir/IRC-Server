@@ -73,6 +73,8 @@
         "optional": "cpp",
         "queue": "cpp",
         "ratio": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp"
     }
 }
