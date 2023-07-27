@@ -8,10 +8,17 @@ void Commands::	invite(Client *client, std::stringstream &_stream)
 	Message message(*client, "INVITE", client->_client_user.nickname);
 	std::string nickname;
 	std::string channel;
+	std::string append;
 
 
 	_stream >> nickname;
 	_stream >> channel;
+	if (!channel.empty() && channel[0] == ':')
+	{
+		getline( _stream, append);
+		channel = channel + append;
+	}
+	
 
 	try
 	{
