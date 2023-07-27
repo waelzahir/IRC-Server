@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:25:49 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 22:58:54 by tel-mouh         ###   ########.fr       */
+/*   Updated: 2023/07/26 23:40:24 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include  <cstring>
 #include <sstream>
-
+#include <fstream>
 #include "Client.hpp"
 #include "Channel.hpp"
 #include "Message.hpp"

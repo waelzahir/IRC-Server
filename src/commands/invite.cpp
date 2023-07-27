@@ -42,7 +42,7 @@ void Commands::	invite(Client *client, std::stringstream &_stream)
 		}
 		else if (e == "ERR_NEEDMOREPARAMS")
 		{
-			message.set_message_error(ERR_NEEDMOREPARAMS(_server->serverName, client->_client_user.nickname ,"KICK"));
+			message.set_message_error(ERR_NEEDMOREPARAMS(_server->serverName, client->_client_user.nickname ,"INVITE"));
 			_server->sendMessage_err(message);
 		}
 		else if (e == "ERR_CHANOPRIVSNEEDED")

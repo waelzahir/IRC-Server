@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 17:43:51 by ozahir            #+#    #+#             */
-/*   Updated: 2023/07/26 21:49:44 by ozahir           ###   ########.fr       */
+/*   Updated: 2023/07/27 00:56:40 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,14 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
 {
     std::stringstream destinations;
     std::string msg;
+    std::string all;
     stream >> destinations;
-    stream >> msg;
+    while (!stream.eof())
+    {
+        stream >> msg;
+        all +=  msg + " " ;
+    }
+        
     if (!destinations.str().length())
     {
         Message err(*client, "PRIVMSG");
@@ -71,7 +77,7 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
                 if (chref.get_user(client->_client_user) == NULL)
                     throw std::string("Client");
                 message.set_param(dest);
-                message.set_trailing(msg);
+                message.set_trailing(all);
                 _server->sendMessageChannel(message, dest);
                 message.clear_final();
             }
@@ -94,7 +100,7 @@ void Commands::privmsg(Client *client, std::stringstream &stream)
         else
         {
             message.set_param(dest);
-            message.set_trailing(msg);
+            message.set_trailing(all);
             try
             {    
                 _server->sendMessage(message, *this->_server->nickmak.at(dest));
