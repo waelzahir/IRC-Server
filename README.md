@@ -2,7 +2,7 @@
 
 ## Introduction
 
-ft_irc is an IRC (Internet Relay Chat) server implementation, aiming to provide a basic chat platform for multiple users to communicate in real-time. The project is built as part of [insert course or personal project details].
+ft_irc is an IRC (Internet Relay Chat) server implementation, aiming to provide a basic chat platform for multiple users to communicate in real-time. The project is built as part of 42 Network Common Core.
 
 ## Features
 
@@ -24,7 +24,7 @@ The project will be divided into the following main components:
 
 ## Installation
 
-[git clone https://github.com/paji1/irc.git]
+[git clone https://github.com/waelzahir/IRC-Server.git]
 
 ## Usage
 
